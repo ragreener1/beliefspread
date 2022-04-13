@@ -3,10 +3,7 @@ package com.robgreener.beliefspread
 import io.mockk.mockk
 import org.apache.commons.lang3.reflect.FieldUtils
 import java.util.*
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertNotEquals
+import kotlin.test.*
 
 class BasicBeliefTest {
     @Test
@@ -122,5 +119,95 @@ class BasicBeliefTest {
 
         belief.setPerception(behaviour, 0.2)
         assertEquals(0.2, perception[behaviour])
+    }
+
+    @Test
+    fun relationshipIsEmptyOnInitialization() {
+        val belief = BasicBelief("belief")
+        assertTrue(
+            (FieldUtils.readField(belief, "relationship", true) as MutableMap<*, *>)
+                .isEmpty()
+        )
+    }
+
+    @Test
+    fun getRelationshipWhenExists() {
+        val b1 = BasicBelief("belief")
+        val b2 = mockk<Belief>()
+        val relationship = HashMap<Belief, Double>()
+        relationship[b2] = 0.2
+        FieldUtils.writeField(b1, "relationship", relationship, true)
+        assertEquals(0.2, b1.getRelationship(b2))
+    }
+
+    @Test
+    fun getRelationshipWhenNotExists() {
+        val b1 = BasicBelief("belief")
+        val b2 = mockk<Belief>()
+        val relationship = HashMap<Belief, Double>()
+        FieldUtils.writeField(b1, "relationship", relationship, true)
+        assertEquals(null, b1.getRelationship(b2))
+    }
+
+    @Test
+    fun setRelationshipDeleteWhenExists() {
+        val b1 = BasicBelief("belief")
+        val b2 = mockk<Belief>()
+        val relationship = HashMap<Belief, Double>()
+        relationship[b2] = 0.2
+        FieldUtils.writeField(b1, "relationship", relationship, true)
+        b1.setRelationship(b2, null)
+        assertEquals(null, relationship[b2])
+    }
+
+    @Test
+    fun setRelationshipDeleteWhenNotExists() {
+        val b1 = BasicBelief("belief")
+        val b2 = mockk<Belief>()
+        val relationship = HashMap<Belief, Double>()
+        FieldUtils.writeField(b1, "relationship", relationship, true)
+        b1.setRelationship(b2, null)
+        assertEquals(null, relationship[b2])
+    }
+
+    @Test
+    fun setRelationshipWhenTooHigh() {
+        val b1 = BasicBelief("belief")
+        val b2 = mockk<Belief>()
+        val relationship = HashMap<Belief, Double>()
+        FieldUtils.writeField(b1, "relationship", relationship, true)
+        val e = assertFailsWith<IllegalArgumentException> { b1.setRelationship(b2, 2.0) }
+        assertEquals("relationship is greater than 1", e.message)
+    }
+
+    @Test
+    fun setRelationshipWhenTooLow() {
+        val b1 = BasicBelief("belief")
+        val b2 = mockk<Belief>()
+        val relationship = HashMap<Belief, Double>()
+        FieldUtils.writeField(b1, "relationship", relationship, true)
+        val e = assertFailsWith<IllegalArgumentException> { b1.setRelationship(b2, -2.0) }
+        assertEquals("relationship is less than -1", e.message)
+    }
+
+    @Test
+    fun setRelationshipWhenExists() {
+        val b1 = BasicBelief("belief")
+        val b2 = mockk<Belief>()
+        val relationship = HashMap<Belief, Double>()
+        relationship[b2] = 0.2
+        FieldUtils.writeField(b1, "relationship", relationship, true)
+        b1.setRelationship(b2, 0.5)
+        assertEquals(0.5, relationship[b2])
+    }
+
+    @Test
+    fun setRelationshipWhenNotExists() {
+        val b1 = BasicBelief("belief")
+        val b2 = mockk<Belief>()
+        val relationship = HashMap<Belief, Double>()
+        FieldUtils.writeField(b1, "relationship", relationship, true)
+        b1.setRelationship(b2, -0.5)
+        assertEquals(-0.5, relationship[b2])
     }
 }

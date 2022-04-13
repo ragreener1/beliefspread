@@ -10,6 +10,7 @@ import java.util.*
  */
 class BasicBelief(override var name: String, override var uuid: UUID) : Belief {
     private val perception: MutableMap<Behaviour, Double> = HashMap()
+    private val relationship: MutableMap<Belief, Double> = HashMap()
 
     /**
      * Create a new BasicBelief with a random UUID.
@@ -31,6 +32,22 @@ class BasicBelief(override var name: String, override var uuid: UUID) : Belief {
             throw IllegalArgumentException("perception is less than -1")
         } else {
             this.perception[behaviour] = perception
+        }
+    }
+
+    override fun getRelationship(belief: Belief): Double? {
+        return relationship[belief]
+    }
+
+    override fun setRelationship(belief: Belief, relationship: Double?) {
+        if (relationship == null) {
+            this.relationship.remove(belief)
+        } else if (relationship > 1.0) {
+            throw IllegalArgumentException("relationship is greater than 1")
+        } else if (relationship < -1.0) {
+            throw IllegalArgumentException("relationship is less than -1")
+        } else {
+            this.relationship[belief] = relationship
         }
     }
 }

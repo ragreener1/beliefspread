@@ -27,7 +27,36 @@ interface Belief : Named, UUIDd {
      *
      * @param behaviour The behaviour.
      * @param perception The new perception.
+     * @throws IllegalArgumentException If perception is not in the range [-1,+1].
      */
     @Throws(IllegalArgumentException::class)
     fun setPerception(behaviour: Behaviour, perception: Double?)
+
+    /**
+     * Gets the relationship.
+     *
+     * The relationship is the amount another belief can be deemed to be
+     * compatible with holding this belief, given that you already hold this
+     * belief.
+     *
+     * @param belief The other belief.
+     * @return The relationship if found.
+     */
+    fun getRelationship(belief: Belief): Double?
+
+    /**
+     * Sets the relationship.
+     *
+     * The relationship is the amount another belief can be deemed to be
+     * compatible with holding this belief, given that you already hold this
+     * belief.
+     *
+     * Deletes a relationship if null is supplied for the relationship.
+     *
+     * @param belief The other belief.
+     * @param relationship The new relationship.
+     * @throws IllegalArgumentException If the relationship is not in the range [-1, +1]
+     */
+    @Throws(IllegalArgumentException::class)
+    fun setRelationship(belief: Belief, relationship: Double?)
 }

@@ -140,6 +140,15 @@ class BasicBeliefTest {
     }
 
     @Test
+    fun `perception is empty on initialization`() {
+        val belief = BasicBelief("belief")
+        assertTrue(
+            (FieldUtils.readField(belief, "perception", true) as MutableMap<*, *>)
+                .isEmpty()
+        )
+    }
+
+    @Test
     fun `relationship is empty on initialization`() {
         val belief = BasicBelief("belief")
         assertTrue(

@@ -27,4 +27,4 @@
 
 rootProject.name = "belief-spread"
 include("lib")
-project(":lib").name = "belief-spread"
+project(":lib").name = "beliefspread"

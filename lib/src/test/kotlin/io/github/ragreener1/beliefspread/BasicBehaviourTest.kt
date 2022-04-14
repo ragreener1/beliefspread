@@ -16,7 +16,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses>
  */
 
-package com.robgreener.beliefspread
+package io.github.ragreener1.beliefspread
 
 import java.util.*
 import kotlin.test.Test

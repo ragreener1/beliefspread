@@ -32,9 +32,14 @@ plugins {
 
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
+
+    `maven-publish`
+
+    signing
 }
 
 version = "0.0.1"
+group = "io.github.ragreener1"
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -99,3 +104,51 @@ val javadocJar: TaskProvider<Jar> by tasks.registering(Jar::class) {
 }
 
 tasks["build"].dependsOn(javadocJar)
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+            artifact(javadocJar)
+            pom {
+                name.set("Belief spread")
+                description.set("A model of how beliefs and behaviours spread between agents")
+                url.set("https://github.com/ragreener1/beliefspread")
+                licenses {
+                    license {
+                        name.set("GNU General Public License, Version 3")
+                        url.set("https://www.gnu.org/licenses/gpl-3.0.txt")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("ragreener1")
+                        name.set("Robert Greener")
+                        email.set("rob@robgreener.com")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:https://github.com/ragreener1/belief-spread.git")
+                    developerConnection.set("scm:git:https://github.com/ragreener1/belief-spread.git")
+                    url.set("https://github.com/ragreener1/belief-spread/")
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/ragreener1/beliefspread")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            }
+        }
+    }
+}
+
+signing {
+    useGpgCmd()
+    sign(publishing.publications["maven"])
+}

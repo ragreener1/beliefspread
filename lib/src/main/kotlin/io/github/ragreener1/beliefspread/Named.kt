@@ -16,28 +16,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses>
  */
 
-package com.robgreener.beliefspread
-
-import java.util.*
+package io.github.ragreener1.beliefspread
 
 /**
- * A [BasicBehaviour] is an implementation of [Behaviour].
+ * Something with a name.
  *
- * @property name The name of the [BasicBehaviour].
- * @property uuid The [UUID] of the [BasicBehaviour].
- * @constructor Create a new [BasicBehaviour] with a supplied [name] and [uuid].
  * @author Robert Greener
  * @since v0.0.1
  */
-class BasicBehaviour(override var name: String, override var uuid: UUID) : Behaviour {
+interface Named {
     /**
-     * Create a new [BasicBehaviour] with a random [UUID].
+     * The name of the [Object].
      *
-     * [UUID.randomUUID] is used to randomly generate the UUID.
-     *
-     * @param name The [name] of the [BasicBehaviour].
      * @author Robert Greener
      * @since v0.0.1
      */
-    constructor(name: String) : this(name, UUID.randomUUID())
+    var name: String
 }

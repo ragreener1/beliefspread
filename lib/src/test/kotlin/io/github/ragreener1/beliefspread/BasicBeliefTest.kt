@@ -248,6 +248,26 @@ class BasicBeliefTest {
     }
 
     @Test
+    fun `equals when same object`() {
+        val b = BasicBelief("b")
+        assertEquals(b, b)
+    }
+
+    @Test
+    fun `equals when different class`() {
+        val b1 = BasicBelief("b")
+        val s = mockk<Belief>()
+        assertNotEquals<Any>(s, b1)
+    }
+
+    @Test
+    fun `equals when null`() {
+        val b1 = BasicBelief("b")
+        val b2: BasicBelief? = null
+        assertNotEquals(b1, b2)
+    }
+
+    @Test
     fun `equals when uuids not equal`() {
         val b1 = BasicBelief("b1")
         val b2 = BasicBelief("b2")

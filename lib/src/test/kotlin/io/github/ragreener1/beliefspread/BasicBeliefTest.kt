@@ -228,4 +228,27 @@ class BasicBeliefTest {
         b1.setRelationship(b2, -0.5)
         assertEquals(-0.5, relationship[b2])
     }
+
+    @Test
+    fun testEqualsWhenUUIDEqual() {
+        val uuid = UUID.randomUUID()
+        val b1 = BasicBelief("b1", uuid)
+        val b2 = BasicBelief("b2", uuid)
+
+        assertEquals(b1, b2)
+    }
+
+    @Test
+    fun testEqualsWhenNotEqual() {
+        val b1 = BasicBelief("b1")
+        val b2 = BasicBelief("b2")
+        assertNotEquals(b1, b2)
+    }
+
+    @Test
+    fun testHashCode() {
+        val uuid = UUID.randomUUID()
+        val b = BasicBelief("b", uuid)
+        assertEquals(uuid.hashCode(), b.hashCode())
+    }
 }

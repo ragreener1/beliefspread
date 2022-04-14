@@ -38,7 +38,7 @@ plugins {
     signing
 }
 
-version = "0.0.5"
+version = "0.1.0-SNAPSHOT"
 group = "io.github.ragreener1"
 
 repositories {

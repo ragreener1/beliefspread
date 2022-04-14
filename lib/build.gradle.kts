@@ -14,6 +14,8 @@ plugins {
     `java-library`
 }
 
+version = "0.0.1"
+
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
@@ -46,10 +48,23 @@ dependencies {
 java {
     sourceCompatibility = JavaVersion.VERSION_16
     targetCompatibility = JavaVersion.VERSION_16
+    withSourcesJar()
+    withJavadocJar()
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         jvmTarget = "16"
+    }
+}
+
+tasks.jar {
+    manifest {
+        attributes(
+            mapOf(
+                "Implementation-Title" to project.name,
+                "Implementation-Version" to project.version
+            )
+        )
     }
 }

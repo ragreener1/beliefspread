@@ -49,4 +49,27 @@ class BasicBehaviourTest {
         val b = BasicBehaviour("b", UUID.randomUUID())
         assertEquals("b", b.name)
     }
+
+    @Test
+    fun `equals when UUID equal`() {
+        val uuid = UUID.randomUUID()
+        val b1 = BasicBehaviour("b1", uuid)
+        val b2 = BasicBehaviour("b2", uuid)
+
+        assertEquals(b1, b2)
+    }
+
+    @Test
+    fun `equals when not equal`() {
+        val b1 = BasicBehaviour("b1")
+        val b2 = BasicBehaviour("b2")
+        assertNotEquals(b1, b2)
+    }
+
+    @Test
+    fun `test hashCode`() {
+        val uuid = UUID.randomUUID()
+        val b = BasicBehaviour("b", uuid)
+        assertEquals(uuid.hashCode(), b.hashCode())
+    }
 }

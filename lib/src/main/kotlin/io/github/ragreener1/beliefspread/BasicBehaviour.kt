@@ -40,4 +40,38 @@ class BasicBehaviour(override var name: String, override var uuid: UUID) : Behav
      * @since v0.0.1
      */
     constructor(name: String) : this(name, UUID.randomUUID())
+
+    /**
+     * Compare equality between this [BasicBehaviour] and another [BasicBehaviour].
+     *
+     * They are equal iff. the [UUID] is equal.
+     *
+     * @param other The other [Object].
+     * @return true if the [UUID] is equal.
+     * @author Robert Greener
+     * @since v0.1.0
+     */
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as BasicBehaviour
+
+        if (uuid != other.uuid) return false
+
+        return true
+    }
+
+    /**
+     * Get the `hashCode` of the [BasicBelief]
+     *
+     * This is solely based on the [UUID].
+     *
+     * @return the hashCode.
+     * @author Robert Greener
+     * @since v0.1.0
+     */
+    override fun hashCode(): Int {
+        return uuid.hashCode()
+    }
 }

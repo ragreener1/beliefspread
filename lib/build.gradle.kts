@@ -28,6 +28,8 @@ plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.5.31"
 
+    id("org.jetbrains.dokka") version "1.6.10"
+
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
 }
@@ -61,13 +63,14 @@ dependencies {
     testImplementation("org.apache.commons:commons-lang3:3.12.0")
 
     testImplementation("io.mockk:mockk:1.12.3")
+
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.10")
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_16
     targetCompatibility = JavaVersion.VERSION_16
     withSourcesJar()
-    withJavadocJar()
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -87,3 +90,12 @@ tasks.jar {
     }
 }
 
+val dokkaHtml by tasks.getting(org.jetbrains.dokka.gradle.DokkaTask::class)
+
+val javadocJar: TaskProvider<Jar> by tasks.registering(Jar::class) {
+    dependsOn(dokkaHtml)
+    archiveClassifier.set("javadoc")
+    from(dokkaHtml.outputDirectory)
+}
+
+tasks["build"].dependsOn(javadocJar)

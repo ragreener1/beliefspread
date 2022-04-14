@@ -39,6 +39,8 @@ class BasicAgent(override var uuid: UUID) : Agent {
      */
     constructor() : this(UUID.randomUUID())
 
+    private val activation: MutableMap<UInt, MutableMap<Belief, Double>> = HashMap()
+
     @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
     override fun getActivation(time: UInt, belief: Belief): Double? {
         TODO("Not yet implemented")

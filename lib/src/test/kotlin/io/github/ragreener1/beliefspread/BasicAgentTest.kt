@@ -19,10 +19,12 @@
 package io.github.ragreener1.beliefspread
 
 import io.mockk.mockk
+import org.apache.commons.lang3.reflect.FieldUtils
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+import kotlin.test.assertTrue
 
 class BasicAgentTest {
     @Test
@@ -80,5 +82,14 @@ class BasicAgentTest {
         val uuid = UUID.randomUUID()
         val a = BasicAgent(uuid)
         assertEquals(uuid.hashCode(), a.hashCode())
+    }
+
+    @Test
+    fun `test activation is initialized empty`() {
+        val agent = BasicAgent()
+        assertTrue(
+            (FieldUtils.readField(agent, "activation", true) as MutableMap<*, *>)
+                .isEmpty()
+        )
     }
 }

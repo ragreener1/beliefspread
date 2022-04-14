@@ -20,5 +20,34 @@ package io.github.ragreener1.beliefspread
 
 /**
  * An Agent which may exist in the model
+ *
+ * @author Robert Greener
+ * @since v0.1.0
  */
-interface Agent : UUIDd
+interface Agent : UUIDd {
+    /**
+     * Get the activation (if found) of an [Agent] towards a [Belief] at a given time.
+     *
+     * This is always between -1 and +1.
+     *
+     * @param time The time.
+     * @param belief The belief.
+     * @return The activation (if found).
+     * @author Robert Greener
+     * @since v0.2.0
+     */
+    fun getActivation(time: UInt, belief: Belief): Double?
+
+    /**
+     * Set the activation of an [Agent] towards a [Belief] at a given time.
+     *
+     * If the activation is `null`, the activation is deleted.
+     *
+     * @param time The time.
+     * @param belief The new belief.
+     * @param activation The new activation.
+     * @author Robert Greener
+     * @since v0.2.0
+     */
+    fun setActivation(time: UInt, belief: Belief, activation: Double?)
+}

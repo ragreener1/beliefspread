@@ -25,33 +25,33 @@ import kotlin.test.*
 
 class BasicBeliefTest {
     @Test
-    fun constructorAssignsUUID() {
+    fun `constructor assigns uuid`() {
         val uuid = UUID.randomUUID()
         val belief = BasicBelief("b", uuid)
         assertEquals(uuid, belief.uuid)
     }
 
     @Test
-    fun constructorGeneratesRandomUUID() {
+    fun `constructor assigns random uuid`() {
         val b1 = BasicBelief("b")
         val b2 = BasicBelief("b")
         assertNotEquals(b1.uuid, b2.uuid)
     }
 
     @Test
-    fun constructorAssignsName() {
+    fun `constructor assigns name`() {
         val b = BasicBelief("b")
         assertEquals("b", b.name)
     }
 
     @Test
-    fun fullConstructorAssignsName() {
+    fun `full constructor assigns name`() {
         val b = BasicBelief("b", UUID.randomUUID())
         assertEquals("b", b.name)
     }
 
     @Test
-    fun getPerceptionWhenExists() {
+    fun `getPerception when exists`() {
         val belief = BasicBelief("belief")
         val behaviour = mockk<Behaviour>()
         val perception = HashMap<Behaviour, Double>()
@@ -62,7 +62,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun getPerceptionWhenNotExists() {
+    fun `getPerception when not exists`() {
         val belief = BasicBelief("belief")
         val behaviour = mockk<Behaviour>()
         val perception = HashMap<Behaviour, Double>()
@@ -72,7 +72,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun setPerceptionDeleteWhenExists() {
+    fun `setPerception delete when exists`() {
         val belief = BasicBelief("belief")
         val behaviour = mockk<Behaviour>()
         val perception = HashMap<Behaviour, Double>()
@@ -84,7 +84,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun setPerceptionDeleteWhenNotExists() {
+    fun `setPerception delete when not exists`() {
         val belief = BasicBelief("belief")
         val behaviour = mockk<Behaviour>()
         val perception = HashMap<Behaviour, Double>()
@@ -95,7 +95,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun setPerceptionWhenTooHigh() {
+    fun `setPerception when too high`() {
         val belief = BasicBelief("belief")
         val behaviour = mockk<Behaviour>()
         val perception = HashMap<Behaviour, Double>()
@@ -106,7 +106,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun setPerceptionWhenTooLow() {
+    fun `setPerception when too low`() {
         val belief = BasicBelief("belief")
         val behaviour = mockk<Behaviour>()
         val perception = HashMap<Behaviour, Double>()
@@ -117,7 +117,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun setPerceptionWhenExists() {
+    fun `setPerception when exists`() {
         val belief = BasicBelief("belief")
         val behaviour = mockk<Behaviour>()
         val perception = HashMap<Behaviour, Double>()
@@ -129,7 +129,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun setPerceptionWhenNotExists() {
+    fun `setPerception when not exists`() {
         val belief = BasicBelief("belief")
         val behaviour = mockk<Behaviour>()
         val perception = HashMap<Behaviour, Double>()
@@ -140,7 +140,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun relationshipIsEmptyOnInitialization() {
+    fun `relationship is empty on initialization`() {
         val belief = BasicBelief("belief")
         assertTrue(
             (FieldUtils.readField(belief, "relationship", true) as MutableMap<*, *>)
@@ -149,7 +149,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun getRelationshipWhenExists() {
+    fun `getRelationship when exists`() {
         val b1 = BasicBelief("belief")
         val b2 = mockk<Belief>()
         val relationship = HashMap<Belief, Double>()
@@ -159,7 +159,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun getRelationshipWhenNotExists() {
+    fun `getRelationship when not exists`() {
         val b1 = BasicBelief("belief")
         val b2 = mockk<Belief>()
         val relationship = HashMap<Belief, Double>()
@@ -168,7 +168,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun setRelationshipDeleteWhenExists() {
+    fun `setRelationship delete when exists`() {
         val b1 = BasicBelief("belief")
         val b2 = mockk<Belief>()
         val relationship = HashMap<Belief, Double>()
@@ -179,7 +179,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun setRelationshipDeleteWhenNotExists() {
+    fun `setRelationship delete when not exists`() {
         val b1 = BasicBelief("belief")
         val b2 = mockk<Belief>()
         val relationship = HashMap<Belief, Double>()
@@ -189,7 +189,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun setRelationshipWhenTooHigh() {
+    fun `setRelationship when too high`() {
         val b1 = BasicBelief("belief")
         val b2 = mockk<Belief>()
         val relationship = HashMap<Belief, Double>()
@@ -199,7 +199,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun setRelationshipWhenTooLow() {
+    fun `setRelationship when too low`() {
         val b1 = BasicBelief("belief")
         val b2 = mockk<Belief>()
         val relationship = HashMap<Belief, Double>()
@@ -209,7 +209,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun setRelationshipWhenExists() {
+    fun `setRelationship when exists`() {
         val b1 = BasicBelief("belief")
         val b2 = mockk<Belief>()
         val relationship = HashMap<Belief, Double>()
@@ -220,7 +220,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun setRelationshipWhenNotExists() {
+    fun `setRelationship when not exists`() {
         val b1 = BasicBelief("belief")
         val b2 = mockk<Belief>()
         val relationship = HashMap<Belief, Double>()
@@ -230,7 +230,7 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun testEqualsWhenUUIDEqual() {
+    fun `equals when uuids equal`() {
         val uuid = UUID.randomUUID()
         val b1 = BasicBelief("b1", uuid)
         val b2 = BasicBelief("b2", uuid)
@@ -239,14 +239,14 @@ class BasicBeliefTest {
     }
 
     @Test
-    fun testEqualsWhenNotEqual() {
+    fun `equals when uuids not equal`() {
         val b1 = BasicBelief("b1")
         val b2 = BasicBelief("b2")
         assertNotEquals(b1, b2)
     }
 
     @Test
-    fun testHashCode() {
+    fun `test hashCode`() {
         val uuid = UUID.randomUUID()
         val b = BasicBelief("b", uuid)
         assertEquals(uuid.hashCode(), b.hashCode())

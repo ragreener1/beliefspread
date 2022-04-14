@@ -25,27 +25,27 @@ import kotlin.test.assertNotEquals
 
 class BasicBehaviourTest {
     @Test
-    fun constructorAssignsUUID() {
+    fun `constructor assigns uuid`() {
         val uuid = UUID.randomUUID()
         val behaviour = BasicBehaviour("b", uuid)
         assertEquals(uuid, behaviour.uuid)
     }
 
     @Test
-    fun constructorGeneratesRandomUUID() {
+    fun `constructor assigns random uuid`() {
         val b1 = BasicBehaviour("b")
         val b2 = BasicBehaviour("b")
         assertNotEquals(b1.uuid, b2.uuid)
     }
 
     @Test
-    fun constructorAssignsName() {
+    fun `constructor assigns name`() {
         val b = BasicBehaviour("b")
         assertEquals("b", b.name)
     }
 
     @Test
-    fun fullConstructorAssignsName() {
+    fun `full constructor assigns name`() {
         val b = BasicBehaviour("b", UUID.randomUUID())
         assertEquals("b", b.name)
     }

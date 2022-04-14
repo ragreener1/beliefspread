@@ -92,4 +92,36 @@ class BasicAgentTest {
                 .isEmpty()
         )
     }
+
+    @Test
+    fun `getActivation when exists`() {
+        val a = BasicAgent()
+        val b = mockk<Belief>()
+        val act = HashMap<UInt, MutableMap<Belief, Double>>()
+        val actAt2 = HashMap<Belief, Double>()
+        actAt2[b] = 0.5
+        act[2u] = actAt2
+        FieldUtils.writeField(a, "activation", act, true)
+        assertEquals(0.5, a.getActivation(2u, b))
+    }
+
+    @Test
+    fun `getActivation when time exists but belief doesn't`() {
+        val a = BasicAgent()
+        val b = mockk<Belief>()
+        val act = HashMap<UInt, MutableMap<Belief, Double>>()
+        val actAt2 = HashMap<Belief, Double>()
+        act[2u] = actAt2
+        FieldUtils.writeField(a, "activation", act, true)
+        assertEquals(null, a.getActivation(2u, b))
+    }
+
+    @Test
+    fun `getActivation when not exists`() {
+        val a = BasicAgent()
+        val b = mockk<Belief>()
+        val act = HashMap<UInt, MutableMap<Belief, Double>>()
+        FieldUtils.writeField(a, "activation", act, true)
+        assertEquals(null, a.getActivation(2u, b))
+    }
 }

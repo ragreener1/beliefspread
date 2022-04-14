@@ -18,6 +18,7 @@
 
 package io.github.ragreener1.beliefspread
 
+import io.mockk.mockk
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -57,6 +58,26 @@ class BasicBehaviourTest {
         val b2 = BasicBehaviour("b2", uuid)
 
         assertEquals(b1, b2)
+    }
+
+    @Test
+    fun `equals when same object`() {
+        val b = BasicBehaviour("b")
+        assertEquals(b, b)
+    }
+
+    @Test
+    fun `equals when different class`() {
+        val b1 = BasicBehaviour("b")
+        val s = mockk<Behaviour>()
+        assertNotEquals<Any>(s, b1)
+    }
+
+    @Test
+    fun `equals when null`() {
+        val b1 = BasicBehaviour("b")
+        val b2: BasicBehaviour? = null
+        assertNotEquals(b1, b2)
     }
 
     @Test

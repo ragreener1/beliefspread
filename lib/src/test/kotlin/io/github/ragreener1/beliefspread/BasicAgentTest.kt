@@ -37,4 +37,27 @@ class BasicAgentTest {
         val a2 = BasicAgent()
         assertNotEquals(a1.uuid, a2.uuid)
     }
+
+    @Test
+    fun `equals when uuids equal`() {
+        val uuid = UUID.randomUUID()
+        val a1 = BasicAgent(uuid)
+        val a2 = BasicAgent(uuid)
+
+        assertEquals(a1, a2)
+    }
+
+    @Test
+    fun `equals when uuids not equal`() {
+        val a1 = BasicAgent()
+        val a2 = BasicAgent()
+        assertNotEquals(a1, a2)
+    }
+
+    @Test
+    fun `test hashCode`() {
+        val uuid = UUID.randomUUID()
+        val a = BasicAgent(uuid)
+        assertEquals(uuid.hashCode(), a.hashCode())
+    }
 }

@@ -38,4 +38,38 @@ class BasicAgent(override var uuid: UUID) : Agent {
      * @since v0.1.0
      */
     constructor() : this(UUID.randomUUID())
+
+    /**
+     * Compare equality between this [BasicAgent] and another [BasicAgent].
+     *
+     * They are equal iff. the [UUID] is equal.
+     *
+     * @param other The other [Object].
+     * @return true if the [UUID] is equal.
+     * @author Robert Greener
+     * @since v0.1.0
+     */
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as BasicAgent
+
+        if (uuid != other.uuid) return false
+
+        return true
+    }
+
+    /**
+     * Gets the `hashCode` of the [BasicAgent].
+     *
+     * This is based solely on the [UUID].
+     *
+     * @return The hashCode.
+     * @author Robert Greener
+     * @since v0.1.0
+     */
+    override fun hashCode(): Int {
+        return uuid.hashCode()
+    }
 }

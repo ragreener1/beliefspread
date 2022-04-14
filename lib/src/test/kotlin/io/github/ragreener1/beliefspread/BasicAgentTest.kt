@@ -18,6 +18,7 @@
 
 package io.github.ragreener1.beliefspread
 
+import io.mockk.mockk
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -45,6 +46,26 @@ class BasicAgentTest {
         val a2 = BasicAgent(uuid)
 
         assertEquals(a1, a2)
+    }
+
+    @Test
+    fun `equals when same object`() {
+        val a1 = BasicAgent()
+        assertEquals(a1, a1)
+    }
+
+    @Test
+    fun `equals when different class`() {
+        val a1 = BasicAgent()
+        val s = mockk<Belief>()
+        assertNotEquals<Any>(s, a1)
+    }
+
+    @Test
+    fun `equals when null`() {
+        val a1 = BasicAgent()
+        val a2: BasicAgent? = null
+        assertNotEquals(a1, a2)
     }
 
     @Test

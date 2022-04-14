@@ -30,6 +30,8 @@ plugins {
 
     id("org.jetbrains.dokka") version "1.6.10"
 
+    id("org.jetbrains.kotlinx.kover") version "0.5.0"
+
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
 

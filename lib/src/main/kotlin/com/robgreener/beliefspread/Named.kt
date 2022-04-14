@@ -20,10 +20,16 @@ package com.robgreener.beliefspread
 
 /**
  * Something with a name.
+ *
+ * @author Robert Greener
+ * @since v0.0.1
  */
 interface Named {
     /**
-     * The Name of the object.
+     * The name of the [Object].
+     *
+     * @author Robert Greener
+     * @since v0.0.1
      */
     var name: String
 }

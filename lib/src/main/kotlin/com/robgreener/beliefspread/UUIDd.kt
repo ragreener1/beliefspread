@@ -20,8 +20,18 @@ package com.robgreener.beliefspread
 
 import java.util.*
 
-/** Something with a UUID. */
+/**
+ * Something with a [UUID].
+ *
+ * @author Robert Greener
+ * @since v0.0.1
+ */
 interface UUIDd {
-    /** The UUID of the Object. */
+    /**
+     * The [UUID] of the [Object].
+     *
+     * @author Robert Greener
+     * @since v0.0.1
+     */
     var uuid: UUID
 }

@@ -21,19 +21,26 @@ package com.robgreener.beliefspread
 import java.util.*
 
 /**
- * A BasicBelief is an implementation of Belief.
+ * A [BasicBelief] is an implementation of [Belief].
  *
- * @param name The name of the Belief.
- * @param uuid The UUID of the Belief
+ * @property name The name of the [BasicBelief].
+ * @property uuid The [UUID] of the [BasicBelief]
+ * @constructor Create a new [BasicBelief] with a [name] and [uuid].
+ * @author Robert Greener
+ * @since v0.0.1
  */
 class BasicBelief(override var name: String, override var uuid: UUID) : Belief {
     private val perception: MutableMap<Behaviour, Double> = HashMap()
     private val relationship: MutableMap<Belief, Double> = HashMap()
 
     /**
-     * Create a new BasicBelief with a random UUID.
+     * Create a new [BasicBelief] with a random [UUID].
+     *
+     * [UUID.randomUUID] is used to randomly generate the [UUID].
      *
      * @param name The name of the BasicBelief.
+     * @author Robert Greener
+     * @since v0.0.1
      */
     constructor(name: String) : this(name, UUID.randomUUID())
 

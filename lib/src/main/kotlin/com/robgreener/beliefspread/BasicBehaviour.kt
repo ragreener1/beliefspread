@@ -21,16 +21,23 @@ package com.robgreener.beliefspread
 import java.util.*
 
 /**
- * A BasicBehaviour is an implementation of Behaviour.
+ * A [BasicBehaviour] is an implementation of [Behaviour].
  *
- * @param name The name of the BasicBehaviour.
- * @param uuid The UUID of the BasicBehaviour.
+ * @property name The name of the [BasicBehaviour].
+ * @property uuid The [UUID] of the [BasicBehaviour].
+ * @constructor Create a new [BasicBehaviour] with a supplied [name] and [uuid].
+ * @author Robert Greener
+ * @since v0.0.1
  */
 class BasicBehaviour(override var name: String, override var uuid: UUID) : Behaviour {
     /**
-     * Create a new BasicBehaviour with a random UUID.
+     * Create a new [BasicBehaviour] with a random [UUID].
      *
-     * @param name The name of the BasicBehaviour.
+     * [UUID.randomUUID] is used to randomly generate the UUID.
+     *
+     * @param name The [name] of the [BasicBehaviour].
+     * @author Robert Greener
+     * @since v0.0.1
      */
     constructor(name: String) : this(name, UUID.randomUUID())
 }

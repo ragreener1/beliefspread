@@ -18,5 +18,10 @@
 
 package com.robgreener.beliefspread
 
-/** A Behaviour. */
+/**
+ * A Behaviour.
+ *
+ * @author Robert Greener
+ * @since v0.0.1
+ */
 interface Behaviour : UUIDd, Named

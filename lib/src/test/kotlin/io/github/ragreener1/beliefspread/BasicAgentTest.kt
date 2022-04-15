@@ -18,7 +18,9 @@
 
 package io.github.ragreener1.beliefspread
 
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import org.apache.commons.lang3.reflect.FieldUtils
 import java.util.*
 import kotlin.test.*
@@ -210,5 +212,69 @@ class BasicAgentTest {
         FieldUtils.writeField(a, "activation", act, true)
         a.setActivation(2u, b, 0.2)
         assertEquals(0.2, act[2u]?.get(b))
+    }
+
+    @Test
+    fun `weightedRelationship when exists`() {
+        val a = mockk<BasicAgent>()
+        val b1 = mockk<Belief>()
+        val b2 = mockk<Belief>()
+
+        every { a.getActivation(2u, b1) } returns 0.5
+        every { b1.getRelationship(b2) } returns 0.1
+        every { a.weightedRelationship(2u, b1, b2) } answers { callOriginal() }
+
+        assertEquals(0.05, a.weightedRelationship(2u, b1, b2))
+
+        verify { a.getActivation(2u, b1) }
+        verify { b1.getRelationship(b2) }
+    }
+
+    @Test
+    fun `weightedRelationship when activation not exists`() {
+        val a = mockk<BasicAgent>()
+        val b1 = mockk<Belief>()
+        val b2 = mockk<Belief>()
+
+        every { a.getActivation(2u, b1) } returns null
+        every { b1.getRelationship(b2) } returns 0.1
+        every { a.weightedRelationship(2u, b1, b2) } answers { callOriginal() }
+
+        assertEquals(null, a.weightedRelationship(2u, b1, b2))
+
+        verify { a.getActivation(2u, b1) }
+        verify(exactly = 0) { b1.getRelationship(b2) }
+    }
+
+    @Test
+    fun `weightedRelationship when relationship not exists`() {
+        val a = mockk<BasicAgent>()
+        val b1 = mockk<Belief>()
+        val b2 = mockk<Belief>()
+
+        every { a.getActivation(2u, b1) } returns 0.5
+        every { b1.getRelationship(b2) } returns null
+        every { a.weightedRelationship(2u, b1, b2) } answers { callOriginal() }
+
+        assertEquals(null, a.weightedRelationship(2u, b1, b2))
+
+        verify { a.getActivation(2u, b1) }
+        verify { b1.getRelationship(b2) }
+    }
+
+    @Test
+    fun `weightedRelationship when relationship and activation not exists`() {
+        val a = mockk<BasicAgent>()
+        val b1 = mockk<Belief>()
+        val b2 = mockk<Belief>()
+
+        every { a.getActivation(2u, b1) } returns null
+        every { b1.getRelationship(b2) } returns null
+        every { a.weightedRelationship(2u, b1, b2) } answers { callOriginal() }
+
+        assertEquals(null, a.weightedRelationship(2u, b1, b2))
+
+        verify { a.getActivation(2u, b1) }
+        verify(exactly = 0) { b1.getRelationship(b2) }
     }
 }

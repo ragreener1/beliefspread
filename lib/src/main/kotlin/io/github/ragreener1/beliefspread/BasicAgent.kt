@@ -60,9 +60,8 @@ class BasicAgent(override var uuid: UUID) : Agent {
         }
     }
 
-    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
     override fun weightedRelationship(time: UInt, b1: Belief, b2: Belief): Double? {
-        TODO("Not yet implemented")
+        return getActivation(time, b1)?.let { b1.getRelationship(b2)?.times(it) }
     }
 
     /**

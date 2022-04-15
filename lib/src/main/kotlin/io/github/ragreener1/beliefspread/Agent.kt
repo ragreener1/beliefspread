@@ -46,8 +46,10 @@ interface Agent : UUIDd {
      * @param time The time.
      * @param belief The new belief.
      * @param activation The new activation.
+     * @throws IllegalArgumentException If activation is not between -1 and +1 (or null).
      * @author Robert Greener
      * @since v0.2.0
      */
+    @Throws(IllegalArgumentException::class)
     fun setActivation(time: UInt, belief: Belief, activation: Double?)
 }

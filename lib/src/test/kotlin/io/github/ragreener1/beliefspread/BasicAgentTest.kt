@@ -21,10 +21,7 @@ package io.github.ragreener1.beliefspread
 import io.mockk.mockk
 import org.apache.commons.lang3.reflect.FieldUtils
 import java.util.*
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class BasicAgentTest {
     @Test
@@ -123,5 +120,95 @@ class BasicAgentTest {
         val act = HashMap<UInt, MutableMap<Belief, Double>>()
         FieldUtils.writeField(a, "activation", act, true)
         assertEquals(null, a.getActivation(2u, b))
+    }
+
+    @Test
+    fun `setActivation delete when exists`() {
+        val a = BasicAgent()
+        val b = mockk<Belief>()
+        val act = HashMap<UInt, MutableMap<Belief, Double>>()
+        val actAt2 = HashMap<Belief, Double>()
+        actAt2[b] = 0.5
+        act[2u] = actAt2
+        FieldUtils.writeField(a, "activation", act, true)
+        a.setActivation(2u, b, null)
+        assertNull(actAt2[b])
+    }
+
+    @Test
+    fun `setActivation delete when time exists but belief doesn't`() {
+        val a = BasicAgent()
+        val b = mockk<Belief>()
+        val act = HashMap<UInt, MutableMap<Belief, Double>>()
+        val actAt2 = HashMap<Belief, Double>()
+        act[2u] = actAt2
+        FieldUtils.writeField(a, "activation", act, true)
+        a.setActivation(2u, b, null)
+        assertNull(actAt2[b])
+    }
+
+    @Test
+    fun `setActivation delete when not exists`() {
+        val a = BasicAgent()
+        val b = mockk<Belief>()
+        val act = HashMap<UInt, MutableMap<Belief, Double>>()
+        FieldUtils.writeField(a, "activation", act, true)
+        a.setActivation(2u, b, null)
+        assertNull(act[2u])
+    }
+
+    @Test
+    fun `setActivation throws IllegalArgumentException when too high`() {
+        val a = BasicAgent()
+        val b = mockk<Belief>()
+        val e = assertFailsWith(
+            IllegalArgumentException::class
+        ) { a.setActivation(2u, b, 2.0); }
+        assertEquals("new activation is greater than 1", e.message)
+    }
+
+    @Test
+    fun `setActivation throws IllegalArgumentException when too low`() {
+        val a = BasicAgent()
+        val b = mockk<Belief>()
+        val e = assertFailsWith(
+            IllegalArgumentException::class
+        ) { a.setActivation(2u, b, -2.0); }
+        assertEquals("new activation is less than -1", e.message)
+    }
+
+    @Test
+    fun `setActivation when exists`() {
+        val a = BasicAgent()
+        val b = mockk<Belief>()
+        val act = HashMap<UInt, MutableMap<Belief, Double>>()
+        val actAt2 = HashMap<Belief, Double>()
+        actAt2[b] = 0.5
+        act[2u] = actAt2
+        FieldUtils.writeField(a, "activation", act, true)
+        a.setActivation(2u, b, 0.2)
+        assertEquals(0.2, actAt2[b])
+    }
+
+    @Test
+    fun `setActivation when time exists but belief doesn't`() {
+        val a = BasicAgent()
+        val b = mockk<Belief>()
+        val act = HashMap<UInt, MutableMap<Belief, Double>>()
+        val actAt2 = HashMap<Belief, Double>()
+        act[2u] = actAt2
+        FieldUtils.writeField(a, "activation", act, true)
+        a.setActivation(2u, b, 0.2)
+        assertEquals(0.2, actAt2[b])
+    }
+
+    @Test
+    fun `setActivation when not exists`() {
+        val a = BasicAgent()
+        val b = mockk<Belief>()
+        val act = HashMap<UInt, MutableMap<Belief, Double>>()
+        FieldUtils.writeField(a, "activation", act, true)
+        a.setActivation(2u, b, 0.2)
+        assertEquals(0.2, act[2u]?.get(b))
     }
 }

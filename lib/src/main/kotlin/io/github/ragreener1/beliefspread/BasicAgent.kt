@@ -45,9 +45,19 @@ class BasicAgent(override var uuid: UUID) : Agent {
         return activation[time]?.get(belief)
     }
 
-    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
     override fun setActivation(time: UInt, belief: Belief, activation: Double?) {
-        TODO("Not yet implemented")
+        if (activation == null) {
+            this.activation[time]?.remove(belief)
+        } else if (activation > 1.0) {
+            throw IllegalArgumentException("new activation is greater than 1")
+        } else if (activation < -1.0) {
+            throw IllegalArgumentException("new activation is less than -1")
+        } else {
+            if (!this.activation.containsKey(time)) {
+                this.activation[time] = HashMap<Belief, Double>()
+            }
+            this.activation[time]!![belief] = activation
+        }
     }
 
     /**

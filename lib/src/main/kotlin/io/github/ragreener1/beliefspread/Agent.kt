@@ -52,4 +52,26 @@ interface Agent : UUIDd {
      */
     @Throws(IllegalArgumentException::class)
     fun setActivation(time: UInt, belief: Belief, activation: Double?)
+
+    /**
+     * Gets the weighted relationship between [Belief]s `b1` and `b2`.
+     *
+     * This is the compatibility for holding `b2`, given that the agent
+     * already holds `b1`.
+     *
+     * This is equal to the activation of `b1` ([Agent.getActivation])
+     * multiplied by the relationship between `b1` and `b2`
+     * ([Belief.getRelationship]).
+     *
+     * Returns `null` if either the activation of `b1` at time `t` is `null`,
+     * or the relationship between `b1` and `b2` is `null`.
+     *
+     * @param time The time.
+     * @param b1 The first [Belief].
+     * @param b2 The second [Belief].
+     * @return The weighted relationship.
+     * @author Robert Greener
+     * @since v0.3.0
+     */
+    fun weightedRelationship(time: UInt, b1: Belief, b2: Belief): Double?
 }

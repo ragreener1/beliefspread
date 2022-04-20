@@ -692,4 +692,69 @@ class BasicAgentTest {
 
         assertEquals(null, agent.getDelta(belief))
     }
+
+    @Test
+    fun `setDelta when exists and valid`() {
+        val agent = BasicAgent()
+        val belief = mockk<Belief>()
+        val delta: MutableMap<Belief, Double> = HashMap()
+        delta[belief] = 1.1
+        FieldUtils.writeField(agent, "delta", delta, true)
+        agent.setDelta(belief, 1.2)
+        assertEquals(1.2, delta[belief])
+    }
+
+    @Test
+    fun `setDelta when exists and valid delete`() {
+        val agent = BasicAgent()
+        val belief = mockk<Belief>()
+        val delta: MutableMap<Belief, Double> = HashMap()
+        delta[belief] = 1.1
+        FieldUtils.writeField(agent, "delta", delta, true)
+        agent.setDelta(belief, null)
+        assertEquals(null, delta[belief])
+    }
+
+    @Test
+    fun `setDelta when not exists and valid`() {
+        val agent = BasicAgent()
+        val belief = mockk<Belief>()
+        val delta: MutableMap<Belief, Double> = HashMap()
+        FieldUtils.writeField(agent, "delta", delta, true)
+        agent.setDelta(belief, 1.2)
+        assertEquals(1.2, delta[belief])
+    }
+
+    @Test
+    fun `setDelta when not exists and valid delete`() {
+        val agent = BasicAgent()
+        val belief = mockk<Belief>()
+        val delta: MutableMap<Belief, Double> = HashMap()
+        FieldUtils.writeField(agent, "delta", delta, true)
+        agent.setDelta(belief, null)
+        assertEquals(null, delta[belief])
+    }
+
+    @Test
+    fun `setDelta when exists and too low`() {
+        val agent = BasicAgent()
+        val belief = mockk<Belief>()
+        val delta: MutableMap<Belief, Double> = HashMap()
+        delta[belief] = 1.1
+        FieldUtils.writeField(agent, "delta", delta, true)
+        val e = assertFailsWith(IllegalArgumentException::class) { agent.setDelta(belief, -0.1) }
+        assertEquals(1.1, delta[belief])
+        assertEquals("delta not strictly positive", e.message)
+    }
+
+    @Test
+    fun `setDelta when not exists and too low`() {
+        val agent = BasicAgent()
+        val belief = mockk<Belief>()
+        val delta: MutableMap<Belief, Double> = HashMap()
+        FieldUtils.writeField(agent, "delta", delta, true)
+        val e = assertFailsWith(IllegalArgumentException::class) { agent.setDelta(belief, -0.1) }
+        assertEquals(null, delta[belief])
+        assertEquals("delta not strictly positive", e.message)
+    }
 }

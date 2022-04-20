@@ -147,9 +147,14 @@ class BasicAgent(override var uuid: UUID) : Agent {
         return delta[belief]
     }
 
-    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
     override fun setDelta(belief: Belief, delta: Double?) {
-        TODO("Not yet implemented")
+        if (delta == null) {
+            this.delta.remove(belief)
+        } else if (delta <= 0) {
+            throw IllegalArgumentException("delta not strictly positive")
+        } else {
+            this.delta[belief] = delta
+        }
     }
 
     /**

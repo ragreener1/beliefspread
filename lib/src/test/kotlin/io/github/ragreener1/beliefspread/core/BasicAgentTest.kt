@@ -671,4 +671,25 @@ class BasicAgentTest {
                 .isEmpty()
         )
     }
+
+    @Test
+    fun `getDelta when exists`() {
+        val agent = BasicAgent()
+        val belief = mockk<Belief>()
+        val delta: MutableMap<Belief, Double> = HashMap()
+        delta[belief] = 1.1
+        FieldUtils.writeField(agent, "delta", delta, true)
+
+        assertEquals(1.1, agent.getDelta(belief))
+    }
+
+    @Test
+    fun `getDelta when not exists`() {
+        val agent = BasicAgent()
+        val belief = mockk<Belief>()
+        val delta: MutableMap<Belief, Double> = HashMap()
+        FieldUtils.writeField(agent, "delta", delta, true)
+
+        assertEquals(null, agent.getDelta(belief))
+    }
 }

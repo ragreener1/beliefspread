@@ -143,9 +143,8 @@ class BasicAgent(override var uuid: UUID) : Agent {
         }
     }
 
-    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
     override fun getDelta(belief: Belief): Double? {
-        TODO("Not yet implemented")
+        return delta[belief]
     }
 
     @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)

@@ -357,4 +357,100 @@ class BasicAgentTest {
         assertEquals<Collection<Pair<Agent, Double>>>(friends.toList(), agent.getFriends())
         assertTrue(agent.getFriends().isEmpty())
     }
+
+    @Test
+    fun `setFriendWeight when not exists and valid`() {
+        val agent = BasicAgent()
+        val friends: MutableMap<Agent, Double> = HashMap()
+        FieldUtils.writeField(agent, "friends", friends, true)
+
+        val a2 = mockk<Agent>()
+        agent.setFriendWeight(a2, 0.5)
+        assertEquals(0.5, friends[a2])
+    }
+
+    @Test
+    fun `setFriendWeight when exists and valid`() {
+        val agent = BasicAgent()
+        val friends: MutableMap<Agent, Double> = HashMap()
+        FieldUtils.writeField(agent, "friends", friends, true)
+
+        val a2 = mockk<Agent>()
+        friends[a2] = 0.2
+        agent.setFriendWeight(a2, 0.5)
+        assertEquals(0.5, friends[a2])
+    }
+
+    @Test
+    fun `setFriendWeight when not exists and valid delete`() {
+        val agent = BasicAgent()
+        val friends: MutableMap<Agent, Double> = HashMap()
+        FieldUtils.writeField(agent, "friends", friends, true)
+
+        val a2 = mockk<Agent>()
+        agent.setFriendWeight(a2, null)
+        assertEquals(null, friends[a2])
+    }
+
+    @Test
+    fun `setFriendWeight when exists and valid delete`() {
+        val agent = BasicAgent()
+        val friends: MutableMap<Agent, Double> = HashMap()
+        FieldUtils.writeField(agent, "friends", friends, true)
+
+        val a2 = mockk<Agent>()
+        friends[a2] = 0.2
+        agent.setFriendWeight(a2, null)
+        assertEquals(null, friends[a2])
+    }
+
+    @Test
+    fun `setFriendWeight when not exists and too high`() {
+        val agent = BasicAgent()
+        val friends: MutableMap<Agent, Double> = HashMap()
+        FieldUtils.writeField(agent, "friends", friends, true)
+
+        val a2 = mockk<Agent>()
+        val e = assertFailsWith(IllegalArgumentException::class) { agent.setFriendWeight(a2, 1.1) }
+        assertEquals(null, friends[a2])
+        assertEquals("weight greater than 1", e.message)
+    }
+
+    @Test
+    fun `setFriendWeight when exists and too high`() {
+        val agent = BasicAgent()
+        val friends: MutableMap<Agent, Double> = HashMap()
+        FieldUtils.writeField(agent, "friends", friends, true)
+
+        val a2 = mockk<Agent>()
+        friends[a2] = 0.2
+        val e = assertFailsWith(IllegalArgumentException::class) { agent.setFriendWeight(a2, 1.1) }
+        assertEquals(0.2, friends[a2])
+        assertEquals("weight greater than 1", e.message)
+    }
+
+    @Test
+    fun `setFriendWeight when not exists and too low`() {
+        val agent = BasicAgent()
+        val friends: MutableMap<Agent, Double> = HashMap()
+        FieldUtils.writeField(agent, "friends", friends, true)
+
+        val a2 = mockk<Agent>()
+        val e = assertFailsWith(IllegalArgumentException::class) { agent.setFriendWeight(a2, -0.1) }
+        assertEquals(null, friends[a2])
+        assertEquals("weight less than 0", e.message)
+    }
+
+    @Test
+    fun `setFriendWeight when exists and too low`() {
+        val agent = BasicAgent()
+        val friends: MutableMap<Agent, Double> = HashMap()
+        FieldUtils.writeField(agent, "friends", friends, true)
+
+        val a2 = mockk<Agent>()
+        friends[a2] = 0.2
+        val e = assertFailsWith(IllegalArgumentException::class) { agent.setFriendWeight(a2, -0.1) }
+        assertEquals(0.2, friends[a2])
+        assertEquals("weight less than 0", e.message)
+    }
 }

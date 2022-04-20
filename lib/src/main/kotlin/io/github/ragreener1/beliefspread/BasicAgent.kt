@@ -84,9 +84,16 @@ class BasicAgent(override var uuid: UUID) : Agent {
         return friends.toList()
     }
 
-    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
     override fun setFriendWeight(friend: Agent, weight: Double?) {
-        TODO("Not yet implemented")
+        if (weight == null) {
+            friends.remove(friend)
+        } else if (weight > 1) {
+            throw IllegalArgumentException("weight greater than 1")
+        } else if (weight < 0) {
+            throw IllegalArgumentException("weight less than 0")
+        } else {
+            friends[friend] = weight
+        }
     }
 
     @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)

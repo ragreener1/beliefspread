@@ -231,7 +231,8 @@ interface Agent : UUIDd {
      * @param time The time.
      * @param belief The [Belief].
      * @param beliefs All the [Belief]s.
-     * @throws IllegalArgumentException If [Agent.getActivation] for `time` and `belief` is null.
+     * @throws IllegalArgumentException If [Agent.getActivation] for `time` and `belief` is null, or
+     *  if [Agent.getDelta] for `belief` is null.
      * @author Robert Greener
      * @since v0.11.0
      */

@@ -18,9 +18,7 @@
 
 package io.github.ragreener1.beliefspread.core
 
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import org.apache.commons.lang3.reflect.FieldUtils
 import java.util.*
 import kotlin.test.*
@@ -756,5 +754,96 @@ class BasicAgentTest {
         val e = assertFailsWith(IllegalArgumentException::class) { agent.setDelta(belief, -0.1) }
         assertEquals(null, delta[belief])
         assertEquals("delta not strictly positive", e.message)
+    }
+
+    @Test
+    fun `updateActivation when previous activation null`() {
+        val agent = mockk<BasicAgent>()
+        val belief = mockk<Belief>()
+        val beliefs = mockk<Collection<Belief>>()
+
+        every { agent.getActivation(1u, belief) } returns null
+        every { agent.getDelta(belief) } returns 1.1
+        every { agent.updateActivation(2u, belief, beliefs) } answers { callOriginal() }
+
+        val e = assertFailsWith(IllegalArgumentException::class) { agent.updateActivation(2u, belief, beliefs) }
+        assertEquals("activation not calculated at previous time step", e.message)
+
+        verify(exactly = 1) { agent.getActivation(1u, belief) }
+    }
+
+    @Test
+    fun `updateActivation when delta is null`() {
+        val agent = mockk<BasicAgent>()
+        val belief = mockk<Belief>()
+        val beliefs = mockk<Collection<Belief>>()
+
+        every { agent.getDelta(belief) } returns null
+        every { agent.updateActivation(2u, belief, beliefs) } answers { callOriginal() }
+
+        val e = assertFailsWith(IllegalArgumentException::class) { agent.updateActivation(2u, belief, beliefs) }
+        assertEquals("Delta for belief null", e.message)
+
+        verify(exactly = 1) { agent.getDelta(belief) }
+    }
+
+    @Test
+    fun `updateActivation when new value within range`() {
+        val agent = mockk<BasicAgent>()
+        val belief = mockk<Belief>()
+        val beliefs = mockk<Collection<Belief>>()
+
+        every { agent.getActivation(1u, belief) } returns 0.2
+        every { agent.getDelta(belief) } returns 1.1
+        every { agent.contextualPressure(1u, belief, beliefs) } returns 0.3
+        every { agent.updateActivation(2u, belief, beliefs) } answers { callOriginal() }
+        every { agent.setActivation(any(), any(), any()) } just Runs
+
+        agent.updateActivation(2u, belief, beliefs)
+
+        verify(exactly = 1) { agent.getActivation(1u, belief) }
+        verify(exactly = 1) { agent.getDelta(belief) }
+        verify(exactly = 1) { agent.contextualPressure(1u, belief, beliefs) }
+        verify(exactly = 1) { agent.setActivation(2u, belief, 0.2 * 1.1 + 0.3) }
+    }
+
+    @Test
+    fun `updateActivation when new value greater than 1`() {
+        val agent = mockk<BasicAgent>()
+        val belief = mockk<Belief>()
+        val beliefs = mockk<Collection<Belief>>()
+
+        every { agent.getActivation(1u, belief) } returns 0.2
+        every { agent.getDelta(belief) } returns 1.1
+        every { agent.contextualPressure(1u, belief, beliefs) } returns 1.0
+        every { agent.updateActivation(2u, belief, beliefs) } answers { callOriginal() }
+        every { agent.setActivation(any(), any(), any()) } just Runs
+
+        agent.updateActivation(2u, belief, beliefs)
+
+        verify(exactly = 1) { agent.getActivation(1u, belief) }
+        verify(exactly = 1) { agent.getDelta(belief) }
+        verify(exactly = 1) { agent.contextualPressure(1u, belief, beliefs) }
+        verify(exactly = 1) { agent.setActivation(2u, belief, 1.0) }
+    }
+
+    @Test
+    fun `updateActivation when new value less than 1`() {
+        val agent = mockk<BasicAgent>()
+        val belief = mockk<Belief>()
+        val beliefs = mockk<Collection<Belief>>()
+
+        every { agent.getActivation(1u, belief) } returns -0.2
+        every { agent.getDelta(belief) } returns 1.1
+        every { agent.contextualPressure(1u, belief, beliefs) } returns -1.0
+        every { agent.updateActivation(2u, belief, beliefs) } answers { callOriginal() }
+        every { agent.setActivation(any(), any(), any()) } just Runs
+
+        agent.updateActivation(2u, belief, beliefs)
+
+        verify(exactly = 1) { agent.getActivation(1u, belief) }
+        verify(exactly = 1) { agent.getDelta(belief) }
+        verify(exactly = 1) { agent.contextualPressure(1u, belief, beliefs) }
+        verify(exactly = 1) { agent.setActivation(2u, belief, -1.0) }
     }
 }

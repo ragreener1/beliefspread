@@ -18,6 +18,8 @@
 
 package io.github.ragreener1.beliefspread.core
 
+import java.lang.Double.max
+import java.lang.Double.min
 import java.util.*
 
 /**
@@ -157,9 +159,20 @@ class BasicAgent(override var uuid: UUID) : Agent {
         }
     }
 
-    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
     override fun updateActivation(time: UInt, belief: Belief, beliefs: Collection<Belief>) {
-        TODO("Not yet implemented")
+        val d = this.getDelta(belief) ?: throw IllegalArgumentException("Delta for belief null")
+        val a = this.getActivation(time - 1u, belief)
+            ?: throw IllegalArgumentException("activation not calculated at previous time step")
+
+        this.setActivation(
+            time, belief, max(
+                -1.0,
+                min(
+                    1.0,
+                    d * a + this.contextualPressure(time - 1u, belief, beliefs)
+                )
+            )
+        )
     }
 
     /**

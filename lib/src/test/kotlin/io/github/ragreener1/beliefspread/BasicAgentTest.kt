@@ -483,4 +483,24 @@ class BasicAgentTest {
                 .isEmpty()
         )
     }
+
+    @Test
+    fun `getActions when exists`() {
+        val agent = BasicAgent()
+        val actions: MutableMap<UInt, Behaviour> = HashMap()
+        FieldUtils.writeField(agent, "actions", actions, true)
+        val behaviour = mockk<Behaviour>()
+        actions[2u] = behaviour
+
+        assertEquals(behaviour, agent.getAction(2u))
+    }
+
+    @Test
+    fun `getActions when not exists`() {
+        val agent = BasicAgent()
+        val actions: MutableMap<UInt, Behaviour> = HashMap()
+        FieldUtils.writeField(agent, "actions", actions, true)
+
+        assertEquals(null, agent.getAction(2u))
+    }
 }

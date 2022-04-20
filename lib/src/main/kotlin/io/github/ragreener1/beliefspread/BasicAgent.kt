@@ -64,6 +64,11 @@ class BasicAgent(override var uuid: UUID) : Agent {
         return getActivation(time, b1)?.let { b1.getRelationship(b2)?.times(it) }
     }
 
+    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
+    override fun contextualise(time: UInt, b: Belief, beliefs: Iterable<Belief>): Double {
+        TODO("Not yet implemented")
+    }
+
     /**
      * Compare equality between this [BasicAgent] and another [BasicAgent].
      *

@@ -74,4 +74,21 @@ interface Agent : UUIDd {
      * @since v0.3.0
      */
     fun weightedRelationship(time: UInt, b1: Belief, b2: Belief): Double?
+
+    /**
+     * Gets the context for holding the [Belief] `b`.
+     *
+     * This is the compatibility for holding `b`, given all the beliefs
+     * the agent holds.
+     *
+     * This is the average of [Agent.weightedRelationship] for every [Belief].
+     *
+     * @param time The time.
+     * @param b The belief.
+     * @param beliefs All the beliefs.
+     * @return The context.
+     * @author Robert Greener
+     * @since v0.4.0
+     */
+    fun contextualise(time: UInt, b: Belief, beliefs: Iterable<Belief>): Double
 }

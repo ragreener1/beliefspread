@@ -91,4 +91,44 @@ interface Agent : UUIDd {
      * @since v0.4.0
      */
     fun contextualise(time: UInt, b: Belief, beliefs: Collection<Belief>): Double
+
+    /**
+     * Gets the friends of the [Agent].
+     *
+     * This gets the friends of the agent with their weight of connection.
+     *
+     * @return The friends with their weight of connection.
+     * @author Robert Greener
+     * @since v0.5.0
+     */
+    fun getFriends(): Collection<Pair<Agent, Double>>
+
+    /**
+     * Set the weight of a friend of the [Agent].
+     *
+     * If they are not friends, this adds another [Agent] as a
+     * `friend` with a supplied `weight`.
+     *
+     * If the `friend` already exists, the weight is overwritten.
+     *
+     * If the `weight` is null, the friend is removed if they were friends.
+     *
+     * @param friend The friend.
+     * @param weight The weight.
+     * @author Robert Greener
+     * @since v0.5.0
+     */
+    fun setFriendWeight(friend: Agent, weight: Double?)
+
+    /**
+     * Gets the weight of a friend of the [Agent].
+     *
+     * If they are not friends, returns null.
+     *
+     * @param friend The friend.
+     * @return The weight, or null if they are not friends.
+     * @author Robert Greener
+     * @since v0.5.0
+     */
+    fun getFriendWeight(friend: Agent): Double?
 }

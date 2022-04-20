@@ -453,4 +453,25 @@ class BasicAgentTest {
         assertEquals(0.2, friends[a2])
         assertEquals("weight less than 0", e.message)
     }
+
+    @Test
+    fun `getFriendWeight when exists`() {
+        val agent = BasicAgent()
+        val friends: MutableMap<Agent, Double> = HashMap()
+        FieldUtils.writeField(agent, "friends", friends, true)
+
+        val a2 = mockk<Agent>()
+        friends[a2] = 0.2
+        assertEquals(0.2, agent.getFriendWeight(a2))
+    }
+
+    @Test
+    fun `getFriendWeight when not exists`() {
+        val agent = BasicAgent()
+        val friends: MutableMap<Agent, Double> = HashMap()
+        FieldUtils.writeField(agent, "friends", friends, true)
+
+        val a2 = mockk<Agent>()
+        assertEquals(null, agent.getFriendWeight(a2))
+    }
 }

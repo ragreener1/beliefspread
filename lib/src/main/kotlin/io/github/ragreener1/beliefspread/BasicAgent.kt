@@ -96,9 +96,8 @@ class BasicAgent(override var uuid: UUID) : Agent {
         }
     }
 
-    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
     override fun getFriendWeight(friend: Agent): Double? {
-        TODO("Not yet implemented")
+        return friends[friend]
     }
 
     /**

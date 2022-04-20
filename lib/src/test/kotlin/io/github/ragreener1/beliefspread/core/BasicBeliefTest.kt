@@ -16,7 +16,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses>
  */
 
-package io.github.ragreener1.beliefspread
+package io.github.ragreener1.beliefspread.core
 
 import io.mockk.mockk
 import org.apache.commons.lang3.reflect.FieldUtils

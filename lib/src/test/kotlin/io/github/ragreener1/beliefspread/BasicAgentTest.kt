@@ -503,4 +503,46 @@ class BasicAgentTest {
 
         assertEquals(null, agent.getAction(2u))
     }
+
+    @Test
+    fun `setAction when exists`() {
+        val agent = BasicAgent()
+        val actions: MutableMap<UInt, Behaviour> = HashMap()
+        FieldUtils.writeField(agent, "actions", actions, true)
+        val b1 = mockk<Behaviour>()
+        val b2 = mockk<Behaviour>()
+        actions[2u] = b1
+        agent.setAction(2u, b2)
+        assertEquals(b2, actions[2u])
+    }
+
+    @Test
+    fun `setAction when exists delete`() {
+        val agent = BasicAgent()
+        val actions: MutableMap<UInt, Behaviour> = HashMap()
+        FieldUtils.writeField(agent, "actions", actions, true)
+        val b1 = mockk<Behaviour>()
+        actions[2u] = b1
+        agent.setAction(2u, null)
+        assertEquals(null, actions[2u])
+    }
+
+    @Test
+    fun `setAction when not exists`() {
+        val agent = BasicAgent()
+        val actions: MutableMap<UInt, Behaviour> = HashMap()
+        FieldUtils.writeField(agent, "actions", actions, true)
+        val b1 = mockk<Behaviour>()
+        agent.setAction(2u, b1)
+        assertEquals(b1, actions[2u])
+    }
+
+    @Test
+    fun `setAction when not exists delete`() {
+        val agent = BasicAgent()
+        val actions: MutableMap<UInt, Behaviour> = HashMap()
+        FieldUtils.writeField(agent, "actions", actions, true)
+        agent.setAction(2u, null)
+        assertEquals(null, actions[2u])
+    }
 }

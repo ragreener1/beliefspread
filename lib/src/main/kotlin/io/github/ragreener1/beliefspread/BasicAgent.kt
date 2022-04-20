@@ -106,9 +106,12 @@ class BasicAgent(override var uuid: UUID) : Agent {
         return actions[time]
     }
 
-    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
     override fun setAction(time: UInt, behaviour: Behaviour?) {
-        TODO("Not yet implemented")
+        if (behaviour == null) {
+            actions.remove(time)
+        } else {
+            actions[time] = behaviour
+        }
     }
 
     /**

@@ -485,7 +485,7 @@ class BasicAgentTest {
     }
 
     @Test
-    fun `getActions when exists`() {
+    fun `getAction when exists`() {
         val agent = BasicAgent()
         val actions: MutableMap<UInt, Behaviour> = HashMap()
         FieldUtils.writeField(agent, "actions", actions, true)
@@ -496,7 +496,7 @@ class BasicAgentTest {
     }
 
     @Test
-    fun `getActions when not exists`() {
+    fun `getAction when not exists`() {
         val agent = BasicAgent()
         val actions: MutableMap<UInt, Behaviour> = HashMap()
         FieldUtils.writeField(agent, "actions", actions, true)

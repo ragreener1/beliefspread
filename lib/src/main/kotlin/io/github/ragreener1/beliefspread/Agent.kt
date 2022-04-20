@@ -97,6 +97,8 @@ interface Agent : UUIDd {
      *
      * This gets the friends of the agent with their weight of connection.
      *
+     * All weights are in the range [0, 1].
+     *
      * @return The friends with their weight of connection.
      * @author Robert Greener
      * @since v0.5.0
@@ -109,19 +111,25 @@ interface Agent : UUIDd {
      * If they are not friends, this adds another [Agent] as a
      * `friend` with a supplied `weight`.
      *
+     * `weight` must be in the range [0, 1].
+     *
      * If the `friend` already exists, the weight is overwritten.
      *
      * If the `weight` is null, the friend is removed if they were friends.
      *
      * @param friend The friend.
      * @param weight The weight.
+     * @throws IllegalArgumentException If weight not in range [0, 1]
      * @author Robert Greener
      * @since v0.5.0
      */
+    @Throws(IllegalArgumentException::class)
     fun setFriendWeight(friend: Agent, weight: Double?)
 
     /**
      * Gets the weight of a friend of the [Agent].
+     *
+     * The weight will be in the range [0, 1].
      *
      * If they are not friends, returns null.
      *

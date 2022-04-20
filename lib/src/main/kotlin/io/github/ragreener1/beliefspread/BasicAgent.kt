@@ -80,9 +80,8 @@ class BasicAgent(override var uuid: UUID) : Agent {
         }
     }
 
-    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
     override fun getFriends(): Collection<Pair<Agent, Double>> {
-        TODO("Not yet implemented")
+        return friends.toList()
     }
 
     @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)

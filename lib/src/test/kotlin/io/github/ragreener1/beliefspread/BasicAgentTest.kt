@@ -348,4 +348,13 @@ class BasicAgentTest {
                 .isEmpty()
         )
     }
+
+    @Test
+    fun `test getFriends when empty`() {
+        val agent = BasicAgent()
+        val friends: MutableMap<Agent, Double> = HashMap()
+        FieldUtils.writeField(agent, "friends", friends, true)
+        assertEquals<Collection<Pair<Agent, Double>>>(friends.toList(), agent.getFriends())
+        assertTrue(agent.getFriends().isEmpty())
+    }
 }

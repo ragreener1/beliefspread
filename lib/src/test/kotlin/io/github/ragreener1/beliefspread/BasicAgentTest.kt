@@ -545,4 +545,89 @@ class BasicAgentTest {
         agent.setAction(2u, null)
         assertEquals(null, actions[2u])
     }
+
+    @Test
+    fun `pressure when no friends`() {
+        val agent = BasicAgent()
+        val belief = mockk<Belief>()
+        val friends: MutableMap<Agent, Double> = HashMap()
+        FieldUtils.writeField(agent, "friends", friends, true)
+        assertEquals(0.0, agent.pressure(2u, belief))
+    }
+
+    @Test
+    fun `pressure when friends did nothing`() {
+        val agent = BasicAgent()
+        val f1 = mockk<Agent>()
+        val f2 = mockk<Agent>()
+
+        every { f1.getAction(2u) } returns null
+        every { f2.getAction(2u) } returns null
+
+        val belief = mockk<Belief>()
+        val friends: MutableMap<Agent, Double> = HashMap()
+        friends[f1] = 0.5
+        friends[f2] = 1.0
+        FieldUtils.writeField(agent, "friends", friends, true)
+        assertEquals(0.0, agent.pressure(2u, belief))
+
+        verify(exactly = 1) { f1.getAction(2u) }
+        verify(exactly = 1) { f2.getAction(2u) }
+    }
+
+    @Test
+    fun `pressure when friends did something but perception is null`() {
+        val agent = BasicAgent()
+        val f1 = mockk<Agent>()
+        val f2 = mockk<Agent>()
+        val b1 = mockk<Behaviour>()
+        val b2 = mockk<Behaviour>()
+
+        every { f1.getAction(2u) } returns b1
+        every { f2.getAction(2u) } returns b2
+
+        val belief = mockk<Belief>()
+
+        every { belief.getPerception(b1) } returns null
+        every { belief.getPerception(b2) } returns null
+
+        val friends: MutableMap<Agent, Double> = HashMap()
+        friends[f1] = 0.5
+        friends[f2] = 1.0
+        FieldUtils.writeField(agent, "friends", friends, true)
+        assertEquals(0.0, agent.pressure(2u, belief))
+
+        verify(exactly = 1) { f1.getAction(2u) }
+        verify(exactly = 1) { f2.getAction(2u) }
+        verify(exactly = 1) { belief.getPerception(b1) }
+        verify(exactly = 1) { belief.getPerception(b2) }
+    }
+
+    @Test
+    fun `pressure when friends did something`() {
+        val agent = BasicAgent()
+        val f1 = mockk<Agent>()
+        val f2 = mockk<Agent>()
+        val b1 = mockk<Behaviour>()
+        val b2 = mockk<Behaviour>()
+
+        every { f1.getAction(2u) } returns b1
+        every { f2.getAction(2u) } returns b2
+
+        val belief = mockk<Belief>()
+
+        every { belief.getPerception(b1) } returns 0.2
+        every { belief.getPerception(b2) } returns 0.3
+
+        val friends: MutableMap<Agent, Double> = HashMap()
+        friends[f1] = 0.5
+        friends[f2] = 1.0
+        FieldUtils.writeField(agent, "friends", friends, true)
+        assertEquals(0.2, agent.pressure(2u, belief))
+
+        verify(exactly = 1) { f1.getAction(2u) }
+        verify(exactly = 1) { f2.getAction(2u) }
+        verify(exactly = 1) { belief.getPerception(b1) }
+        verify(exactly = 1) { belief.getPerception(b2) }
+    }
 }

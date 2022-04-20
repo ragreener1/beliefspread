@@ -114,9 +114,22 @@ class BasicAgent(override var uuid: UUID) : Agent {
         }
     }
 
-    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
     override fun pressure(time: UInt, belief: Belief): Double {
-        TODO("Not yet implemented")
+        return if (friends.isEmpty()) {
+            0.0
+        } else {
+            var returnValue = 0.0
+            for ((a, w) in friends) {
+                val aAction = a.getAction(time)
+                aAction?.let { behaviour ->
+                    belief.getPerception(behaviour)?.let { perception ->
+                        returnValue += w * perception
+                    }
+                }
+            }
+
+            return returnValue / friends.size
+        }
     }
 
     /**

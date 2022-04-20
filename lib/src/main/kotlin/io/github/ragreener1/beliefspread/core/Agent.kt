@@ -214,6 +214,8 @@ interface Agent : UUIDd {
      * This is the value that the activation for the [Belief]
      * changes by (multiplicatively) at every time step.
      *
+     * If `delta` is `null` it removes the `delta`.
+     *
      * @param belief The [Belief].
      * @param delta The new strictly positive (non-zero) delta.
      * @throws IllegalArgumentException if delta <= 0.

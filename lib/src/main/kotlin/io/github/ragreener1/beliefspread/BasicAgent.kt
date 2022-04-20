@@ -100,6 +100,16 @@ class BasicAgent(override var uuid: UUID) : Agent {
         return friends[friend]
     }
 
+    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
+    override fun getAction(time: UInt): Behaviour? {
+        TODO("Not yet implemented")
+    }
+
+    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
+    override fun setAction(time: UInt, behaviour: Behaviour?) {
+        TODO("Not yet implemented")
+    }
+
     /**
      * Compare equality between this [BasicAgent] and another [BasicAgent].
      *

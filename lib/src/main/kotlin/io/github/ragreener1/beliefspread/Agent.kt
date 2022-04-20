@@ -139,4 +139,28 @@ interface Agent : UUIDd {
      * @since v0.5.0
      */
     fun getFriendWeight(friend: Agent): Double?
+
+    /**
+     * Gets the [Behaviour] the [Agent] performed at a given time.
+     *
+     * Returns null if nothing has/was performed.
+     *
+     * @param time The time.
+     * @return The [Behaviour] performed.
+     * @author Robert Greener
+     * @since v0.6.0
+     */
+    fun getAction(time: UInt): Behaviour?
+
+    /**
+     * Sets the [Behaviour] the [Agent] performed at a given time.
+     *
+     * If `null` it unsets the [Behaviour].
+     *
+     * @param time The time.
+     * @param behaviour The [Behaviour].
+     * @author Robert Greener
+     * @since v0.6.0
+     */
+    fun setAction(time: UInt, behaviour: Behaviour?)
 }

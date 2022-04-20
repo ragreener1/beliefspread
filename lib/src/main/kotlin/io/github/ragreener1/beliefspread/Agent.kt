@@ -176,4 +176,20 @@ interface Agent : UUIDd {
      * @since v0.7.0
      */
     fun pressure(time: UInt, belief: Belief): Double
+
+    /**
+     * Gets the contextual pressure that the [Agent] feels to adopt a [Belief].
+     *
+     * This takes into account the beliefs that the agent already holds.
+     *
+     * @param time The Time.
+     * @param belief The belief.
+     * @param beliefs All the beliefs.
+     * @return The contextual pressure.
+     * @see Agent.pressure
+     * @see Agent.contextualise
+     * @author Robert Greener
+     * @since v0.8.0
+     */
+    fun contextualPressure(time: UInt, belief: Belief, beliefs: Collection<Belief>): Double
 }

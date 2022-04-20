@@ -339,4 +339,13 @@ class BasicAgentTest {
         verify(exactly = 1) { a.weightedRelationship(2u, b1, b1) }
         verify(exactly = 1) { a.weightedRelationship(2u, b1, b2) }
     }
+
+    @Test
+    fun `test friends is initialized empty`() {
+        val agent = BasicAgent()
+        assertTrue(
+            (FieldUtils.readField(agent, "friends", true) as MutableMap<*, *>)
+                .isEmpty()
+        )
+    }
 }

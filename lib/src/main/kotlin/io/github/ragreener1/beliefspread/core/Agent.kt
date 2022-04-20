@@ -192,4 +192,34 @@ interface Agent : UUIDd {
      * @since v0.8.0
      */
     fun contextualPressure(time: UInt, belief: Belief, beliefs: Collection<Belief>): Double
+
+    /**
+     * Gets the delta for a given [Belief].
+     *
+     * This is the value that the activation for the [Belief]
+     * changes by (multiplicatively) at every time step.
+     *
+     * This is a strictly positive (non-zero) value.
+     *
+     * @param belief The [Belief].
+     * @return The delta for the [Belief] and this [Agent].
+     * @author Robert Greener
+     * @since v0.10.0
+     */
+    fun getDelta(belief: Belief): Double?
+
+    /**
+     * Sets the delta for a given [Belief].
+     *
+     * This is the value that the activation for the [Belief]
+     * changes by (multiplicatively) at every time step.
+     *
+     * @param belief The [Belief].
+     * @param delta The new strictly positive (non-zero) delta.
+     * @throws IllegalArgumentException if delta <= 0.
+     * @author Robert Greener
+     * @since v0.10.0
+     */
+    @Throws(IllegalArgumentException::class)
+    fun setDelta(belief: Belief, delta: Double?)
 }

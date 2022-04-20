@@ -474,4 +474,13 @@ class BasicAgentTest {
         val a2 = mockk<Agent>()
         assertEquals(null, agent.getFriendWeight(a2))
     }
+
+    @Test
+    fun `test actions is initialized empty`() {
+        val agent = BasicAgent()
+        assertTrue(
+            (FieldUtils.readField(agent, "actions", true) as MutableMap<*, *>)
+                .isEmpty()
+        )
+    }
 }

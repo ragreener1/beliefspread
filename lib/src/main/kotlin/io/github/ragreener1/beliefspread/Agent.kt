@@ -163,4 +163,17 @@ interface Agent : UUIDd {
      * @since v0.6.0
      */
     fun setAction(time: UInt, behaviour: Behaviour?)
+
+    /**
+     * Gets the pressure the [Agent] feels to adopt a [Belief] given the actions of their friends.
+     *
+     * This does not take into account the beliefs the agent already holds.
+     *
+     * @param time The time.
+     * @param belief The belief.
+     * @return The pressure.
+     * @author Robert Greener
+     * @since v0.7.0
+     */
+    fun pressure(time: UInt, belief: Belief): Double
 }

@@ -662,4 +662,13 @@ class BasicAgentTest {
         verify(exactly = 1) { agent.contextualise(2u, belief, beliefs) }
         verify(exactly = 1) { agent.pressure(2u, belief) }
     }
+
+    @Test
+    fun `test delta is initialized empty`() {
+        val agent = BasicAgent()
+        assertTrue(
+            (FieldUtils.readField(agent, "delta", true) as MutableMap<*, *>)
+                .isEmpty()
+        )
+    }
 }

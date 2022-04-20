@@ -45,6 +45,8 @@ class BasicAgent(override var uuid: UUID) : Agent {
 
     private val actions: MutableMap<UInt, Behaviour> = HashMap()
 
+    private val delta: MutableMap<Belief, Double> = HashMap()
+
     override fun getActivation(time: UInt, belief: Belief): Double? {
         return activation[time]?.get(belief)
     }

@@ -64,9 +64,18 @@ class BasicAgent(override var uuid: UUID) : Agent {
         return getActivation(time, b1)?.let { b1.getRelationship(b2)?.times(it) }
     }
 
-    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
-    override fun contextualise(time: UInt, b: Belief, beliefs: Iterable<Belief>): Double {
-        TODO("Not yet implemented")
+    override fun contextualise(time: UInt, b: Belief, beliefs: Collection<Belief>): Double {
+        val beliefsSize = beliefs.size
+
+        return if (beliefsSize == 0) {
+            0.0
+        } else {
+            beliefs
+                .asSequence()
+                .map { b2 -> weightedRelationship(time, b, b2) }
+                .filterNotNull()
+                .fold(0.0) { acc, v -> acc + v } / beliefs.size
+        }
     }
 
     /**

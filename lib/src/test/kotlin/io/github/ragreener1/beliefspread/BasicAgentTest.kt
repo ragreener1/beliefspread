@@ -277,4 +277,66 @@ class BasicAgentTest {
         verify { a.getActivation(2u, b1) }
         verify(exactly = 0) { b1.getRelationship(b2) }
     }
+
+    @Test
+    fun `contextualise when Beliefs empty returns 0`() {
+        val b = mockk<Belief>()
+        val a = mockk<BasicAgent>()
+        val beliefs = HashSet<Belief>()
+
+        every { a.contextualise(2u, b, beliefs) } answers { callOriginal() }
+
+        assertEquals(0.0, a.contextualise(2u, b, beliefs))
+    }
+
+    @Test
+    fun `contextualise when Beliefs non-empty and all weightedRelationships non-null`() {
+        val a = mockk<BasicAgent>()
+        val b1 = mockk<Belief>()
+        val b2 = mockk<Belief>()
+        val beliefs = hashSetOf<Belief>(b1, b2)
+
+        every { a.weightedRelationship(2u, b1, b1) } returns 0.5
+        every { a.weightedRelationship(2u, b1, b2) } returns -0.75
+        every { a.contextualise(2u, b1, beliefs) } answers { callOriginal() }
+
+        assertEquals(-0.125, a.contextualise(2u, b1, beliefs))
+
+        verify(exactly = 1) { a.weightedRelationship(2u, b1, b1) }
+        verify(exactly = 1) { a.weightedRelationship(2u, b1, b2) }
+    }
+
+    @Test
+    fun `contextualise when Beliefs non-empty and not all weightedRelationships non-null`() {
+        val a = mockk<BasicAgent>()
+        val b1 = mockk<Belief>()
+        val b2 = mockk<Belief>()
+        val beliefs = hashSetOf<Belief>(b1, b2)
+
+        every { a.weightedRelationship(2u, b1, b1) } returns 0.5
+        every { a.weightedRelationship(2u, b1, b2) } returns null
+        every { a.contextualise(2u, b1, beliefs) } answers { callOriginal() }
+
+        assertEquals(0.25, a.contextualise(2u, b1, beliefs))
+
+        verify(exactly = 1) { a.weightedRelationship(2u, b1, b1) }
+        verify(exactly = 1) { a.weightedRelationship(2u, b1, b2) }
+    }
+
+    @Test
+    fun `contextualise when Beliefs non-empty and not all weightedRelationships null`() {
+        val a = mockk<BasicAgent>()
+        val b1 = mockk<Belief>()
+        val b2 = mockk<Belief>()
+        val beliefs = hashSetOf<Belief>(b1, b2)
+
+        every { a.weightedRelationship(2u, b1, b1) } returns null
+        every { a.weightedRelationship(2u, b1, b2) } returns null
+        every { a.contextualise(2u, b1, beliefs) } answers { callOriginal() }
+
+        assertEquals(0.0, a.contextualise(2u, b1, beliefs))
+
+        verify(exactly = 1) { a.weightedRelationship(2u, b1, b1) }
+        verify(exactly = 1) { a.weightedRelationship(2u, b1, b2) }
+    }
 }

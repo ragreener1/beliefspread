@@ -90,5 +90,5 @@ interface Agent : UUIDd {
      * @author Robert Greener
      * @since v0.4.0
      */
-    fun contextualise(time: UInt, b: Belief, beliefs: Iterable<Belief>): Double
+    fun contextualise(time: UInt, b: Belief, beliefs: Collection<Belief>): Double
 }

@@ -132,9 +132,13 @@ class BasicAgent(override var uuid: UUID) : Agent {
         }
     }
 
-    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
     override fun contextualPressure(time: UInt, belief: Belief, beliefs: Collection<Belief>): Double {
-        TODO("Not yet implemented")
+        val p = pressure(time, belief)
+        return if (p > 0) {
+            (1 + contextualise(time, belief, beliefs)) / 2.0 * p
+        } else {
+            (1 - contextualise(time, belief, beliefs)) / 2.0 * p
+        }
     }
 
     /**

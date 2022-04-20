@@ -630,4 +630,36 @@ class BasicAgentTest {
         verify(exactly = 1) { belief.getPerception(b1) }
         verify(exactly = 1) { belief.getPerception(b2) }
     }
+
+    @Test
+    fun `contextualPressure when pressure positive`() {
+        val agent = mockk<BasicAgent>()
+        val belief = mockk<Belief>()
+        val beliefs = mockk<Collection<Belief>>()
+
+        every { agent.contextualise(2u, belief, beliefs) } returns 0.5
+        every { agent.pressure(2u, belief) } returns 0.1
+        every { agent.contextualPressure(2u, belief, beliefs) } answers { callOriginal() }
+
+        assertEquals(0.075, agent.contextualPressure(2u, belief, beliefs), 0.001)
+
+        verify(exactly = 1) { agent.contextualise(2u, belief, beliefs) }
+        verify(exactly = 1) { agent.pressure(2u, belief) }
+    }
+
+    @Test
+    fun `contextualPressure when pressure negative`() {
+        val agent = mockk<BasicAgent>()
+        val belief = mockk<Belief>()
+        val beliefs = mockk<Collection<Belief>>()
+
+        every { agent.contextualise(2u, belief, beliefs) } returns 0.5
+        every { agent.pressure(2u, belief) } returns -0.1
+        every { agent.contextualPressure(2u, belief, beliefs) } answers { callOriginal() }
+
+        assertEquals(-0.025, agent.contextualPressure(2u, belief, beliefs))
+
+        verify(exactly = 1) { agent.contextualise(2u, belief, beliefs) }
+        verify(exactly = 1) { agent.pressure(2u, belief) }
+    }
 }

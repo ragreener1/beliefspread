@@ -157,6 +157,11 @@ class BasicAgent(override var uuid: UUID) : Agent {
         }
     }
 
+    @Deprecated("Not yet implemented", level = DeprecationLevel.ERROR)
+    override fun updateActivation(time: UInt, belief: Belief, beliefs: Collection<Belief>) {
+        TODO("Not yet implemented")
+    }
+
     /**
      * Compare equality between this [BasicAgent] and another [BasicAgent].
      *

@@ -224,4 +224,17 @@ interface Agent : UUIDd {
      */
     @Throws(IllegalArgumentException::class)
     fun setDelta(belief: Belief, delta: Double?)
+
+    /**
+     * Updates the activation for a given time and [Belief].
+     *
+     * @param time The time.
+     * @param belief The [Belief].
+     * @param beliefs All the [Belief]s.
+     * @throws IllegalArgumentException If [Agent.getActivation] for `time` and `belief` is null.
+     * @author Robert Greener
+     * @since v0.11.0
+     */
+    @Throws(IllegalArgumentException::class)
+    fun updateActivation(time: UInt, belief: Belief, beliefs: Collection<Belief>)
 }

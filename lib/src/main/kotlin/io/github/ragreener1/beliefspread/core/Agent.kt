@@ -238,18 +238,4 @@ interface Agent : UUIDd {
      */
     @Throws(IllegalArgumentException::class)
     fun updateActivation(time: UInt, belief: Belief, beliefs: Collection<Belief>)
-
-    /**
-     * Performs an action at a given `time`.
-     *
-     * This function should use the parameters of the agent to choose what to do at a given time.
-     *
-     * This will update the `action` at the given time.
-     *
-     * @param time The time
-     * @param beliefs All the [Belief]s.
-     * @author Robert Greener
-     * @since v0.12.0
-     */
-    fun performAction(time: UInt, beliefs: Collection<Belief>)
 }

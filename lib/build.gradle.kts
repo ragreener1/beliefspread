@@ -154,3 +154,11 @@ signing {
     useGpgCmd()
     sign(publishing.publications["maven"])
 }
+
+tasks.dokkaHtml.configure {
+    dokkaSourceSets {
+        named("main") {
+            includes.from("module.md")
+        }
+    }
+}

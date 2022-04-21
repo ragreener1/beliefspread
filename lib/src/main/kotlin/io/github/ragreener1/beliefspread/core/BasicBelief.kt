@@ -29,7 +29,7 @@ import java.util.*
  * @author Robert Greener
  * @since v0.0.1
  */
-class BasicBelief(override var name: String, override var uuid: UUID) : Belief {
+open class BasicBelief(override var name: String, override var uuid: UUID) : Belief {
     private val perception: MutableMap<Behaviour, Double> = HashMap()
     private val relationship: MutableMap<Belief, Double> = HashMap()
 

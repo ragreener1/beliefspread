@@ -29,7 +29,7 @@ import java.util.*
  * @author Robert Greener
  * @since v0.0.1
  */
-class BasicBehaviour(override var name: String, override var uuid: UUID) : Behaviour {
+open class BasicBehaviour(override var name: String, override var uuid: UUID) : Behaviour {
     /**
      * Create a new [BasicBehaviour] with a random [UUID].
      *

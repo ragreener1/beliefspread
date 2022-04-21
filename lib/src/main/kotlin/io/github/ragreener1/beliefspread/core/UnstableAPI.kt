@@ -26,5 +26,5 @@ package io.github.ragreener1.beliefspread.core
  */
 @RequiresOptIn(message = "This API is experimental. It may be changed in the future.")
 @Retention(AnnotationRetention.BINARY)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.CONSTRUCTOR)
 annotation class UnstableAPI

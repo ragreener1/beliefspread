@@ -20,6 +20,9 @@ package io.github.ragreener1.beliefspread.core
 
 /**
  * This specifies that the API is unstable.
+ *
+ * @author Robert Greener
+ * @since v0.13.0
  */
 @RequiresOptIn(message = "This API is experimental. It may be changed in the future.")
 @Retention(AnnotationRetention.BINARY)

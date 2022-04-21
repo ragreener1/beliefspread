@@ -40,7 +40,7 @@ plugins {
     signing
 }
 
-version = "0.12.0-SNAPSHOT"
+version = "0.12.0"
 group = "io.github.ragreener1"
 
 repositories {

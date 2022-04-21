@@ -27,63 +27,63 @@ class BasicAgentTest {
     @Test
     fun `constructor assigns uuid`() {
         val uuid = UUID.randomUUID()
-        val a = BasicAgent(uuid)
+        val a = BasicAgentImpl(uuid)
         assertEquals(uuid, a.uuid)
     }
 
     @Test
     fun `constructor assigns random uuid`() {
-        val a1 = BasicAgent()
-        val a2 = BasicAgent()
+        val a1 = BasicAgentImpl()
+        val a2 = BasicAgentImpl()
         assertNotEquals(a1.uuid, a2.uuid)
     }
 
     @Test
     fun `equals when uuids equal`() {
         val uuid = UUID.randomUUID()
-        val a1 = BasicAgent(uuid)
-        val a2 = BasicAgent(uuid)
+        val a1 = BasicAgentImpl(uuid)
+        val a2 = BasicAgentImpl(uuid)
 
         assertEquals(a1, a2)
     }
 
     @Test
     fun `equals when same object`() {
-        val a1 = BasicAgent()
+        val a1 = BasicAgentImpl()
         assertEquals(a1, a1)
     }
 
     @Test
     fun `equals when different class`() {
-        val a1 = BasicAgent()
+        val a1 = BasicAgentImpl()
         val s = mockk<Belief>()
         assertNotEquals<Any>(s, a1)
     }
 
     @Test
     fun `equals when null`() {
-        val a1 = BasicAgent()
-        val a2: BasicAgent? = null
+        val a1 = BasicAgentImpl()
+        val a2: BasicAgentImpl? = null
         assertNotEquals(a1, a2)
     }
 
     @Test
     fun `equals when uuids not equal`() {
-        val a1 = BasicAgent()
-        val a2 = BasicAgent()
+        val a1 = BasicAgentImpl()
+        val a2 = BasicAgentImpl()
         assertNotEquals(a1, a2)
     }
 
     @Test
     fun `test hashCode`() {
         val uuid = UUID.randomUUID()
-        val a = BasicAgent(uuid)
+        val a = BasicAgentImpl(uuid)
         assertEquals(uuid.hashCode(), a.hashCode())
     }
 
     @Test
     fun `test activation is initialized empty`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         assertTrue(
             (FieldUtils.readField(agent, "activation", true) as MutableMap<*, *>)
                 .isEmpty()
@@ -92,7 +92,7 @@ class BasicAgentTest {
 
     @Test
     fun `getActivation when exists`() {
-        val a = BasicAgent()
+        val a = BasicAgentImpl()
         val b = mockk<Belief>()
         val act = HashMap<UInt, MutableMap<Belief, Double>>()
         val actAt2 = HashMap<Belief, Double>()
@@ -104,7 +104,7 @@ class BasicAgentTest {
 
     @Test
     fun `getActivation when time exists but belief doesn't`() {
-        val a = BasicAgent()
+        val a = BasicAgentImpl()
         val b = mockk<Belief>()
         val act = HashMap<UInt, MutableMap<Belief, Double>>()
         val actAt2 = HashMap<Belief, Double>()
@@ -115,7 +115,7 @@ class BasicAgentTest {
 
     @Test
     fun `getActivation when not exists`() {
-        val a = BasicAgent()
+        val a = BasicAgentImpl()
         val b = mockk<Belief>()
         val act = HashMap<UInt, MutableMap<Belief, Double>>()
         FieldUtils.writeField(a, "activation", act, true)
@@ -124,7 +124,7 @@ class BasicAgentTest {
 
     @Test
     fun `setActivation delete when exists`() {
-        val a = BasicAgent()
+        val a = BasicAgentImpl()
         val b = mockk<Belief>()
         val act = HashMap<UInt, MutableMap<Belief, Double>>()
         val actAt2 = HashMap<Belief, Double>()
@@ -137,7 +137,7 @@ class BasicAgentTest {
 
     @Test
     fun `setActivation delete when time exists but belief doesn't`() {
-        val a = BasicAgent()
+        val a = BasicAgentImpl()
         val b = mockk<Belief>()
         val act = HashMap<UInt, MutableMap<Belief, Double>>()
         val actAt2 = HashMap<Belief, Double>()
@@ -149,7 +149,7 @@ class BasicAgentTest {
 
     @Test
     fun `setActivation delete when not exists`() {
-        val a = BasicAgent()
+        val a = BasicAgentImpl()
         val b = mockk<Belief>()
         val act = HashMap<UInt, MutableMap<Belief, Double>>()
         FieldUtils.writeField(a, "activation", act, true)
@@ -159,7 +159,7 @@ class BasicAgentTest {
 
     @Test
     fun `setActivation throws IllegalArgumentException when too high`() {
-        val a = BasicAgent()
+        val a = BasicAgentImpl()
         val b = mockk<Belief>()
         val e = assertFailsWith(
             IllegalArgumentException::class
@@ -169,7 +169,7 @@ class BasicAgentTest {
 
     @Test
     fun `setActivation throws IllegalArgumentException when too low`() {
-        val a = BasicAgent()
+        val a = BasicAgentImpl()
         val b = mockk<Belief>()
         val e = assertFailsWith(
             IllegalArgumentException::class
@@ -179,7 +179,7 @@ class BasicAgentTest {
 
     @Test
     fun `setActivation when exists`() {
-        val a = BasicAgent()
+        val a = BasicAgentImpl()
         val b = mockk<Belief>()
         val act = HashMap<UInt, MutableMap<Belief, Double>>()
         val actAt2 = HashMap<Belief, Double>()
@@ -192,7 +192,7 @@ class BasicAgentTest {
 
     @Test
     fun `setActivation when time exists but belief doesn't`() {
-        val a = BasicAgent()
+        val a = BasicAgentImpl()
         val b = mockk<Belief>()
         val act = HashMap<UInt, MutableMap<Belief, Double>>()
         val actAt2 = HashMap<Belief, Double>()
@@ -204,7 +204,7 @@ class BasicAgentTest {
 
     @Test
     fun `setActivation when not exists`() {
-        val a = BasicAgent()
+        val a = BasicAgentImpl()
         val b = mockk<Belief>()
         val act = HashMap<UInt, MutableMap<Belief, Double>>()
         FieldUtils.writeField(a, "activation", act, true)
@@ -214,7 +214,7 @@ class BasicAgentTest {
 
     @Test
     fun `weightedRelationship when exists`() {
-        val a = mockk<BasicAgent>()
+        val a = mockk<BasicAgentImpl>()
         val b1 = mockk<Belief>()
         val b2 = mockk<Belief>()
 
@@ -230,7 +230,7 @@ class BasicAgentTest {
 
     @Test
     fun `weightedRelationship when activation not exists`() {
-        val a = mockk<BasicAgent>()
+        val a = mockk<BasicAgentImpl>()
         val b1 = mockk<Belief>()
         val b2 = mockk<Belief>()
 
@@ -246,7 +246,7 @@ class BasicAgentTest {
 
     @Test
     fun `weightedRelationship when relationship not exists`() {
-        val a = mockk<BasicAgent>()
+        val a = mockk<BasicAgentImpl>()
         val b1 = mockk<Belief>()
         val b2 = mockk<Belief>()
 
@@ -262,7 +262,7 @@ class BasicAgentTest {
 
     @Test
     fun `weightedRelationship when relationship and activation not exists`() {
-        val a = mockk<BasicAgent>()
+        val a = mockk<BasicAgentImpl>()
         val b1 = mockk<Belief>()
         val b2 = mockk<Belief>()
 
@@ -279,7 +279,7 @@ class BasicAgentTest {
     @Test
     fun `contextualise when Beliefs empty returns 0`() {
         val b = mockk<Belief>()
-        val a = mockk<BasicAgent>()
+        val a = mockk<BasicAgentImpl>()
         val beliefs = HashSet<Belief>()
 
         every { a.contextualise(2u, b, beliefs) } answers { callOriginal() }
@@ -289,7 +289,7 @@ class BasicAgentTest {
 
     @Test
     fun `contextualise when Beliefs non-empty and all weightedRelationships non-null`() {
-        val a = mockk<BasicAgent>()
+        val a = mockk<BasicAgentImpl>()
         val b1 = mockk<Belief>()
         val b2 = mockk<Belief>()
         val beliefs = hashSetOf<Belief>(b1, b2)
@@ -306,7 +306,7 @@ class BasicAgentTest {
 
     @Test
     fun `contextualise when Beliefs non-empty and not all weightedRelationships non-null`() {
-        val a = mockk<BasicAgent>()
+        val a = mockk<BasicAgentImpl>()
         val b1 = mockk<Belief>()
         val b2 = mockk<Belief>()
         val beliefs = hashSetOf<Belief>(b1, b2)
@@ -323,7 +323,7 @@ class BasicAgentTest {
 
     @Test
     fun `contextualise when Beliefs non-empty and not all weightedRelationships null`() {
-        val a = mockk<BasicAgent>()
+        val a = mockk<BasicAgentImpl>()
         val b1 = mockk<Belief>()
         val b2 = mockk<Belief>()
         val beliefs = hashSetOf<Belief>(b1, b2)
@@ -340,7 +340,7 @@ class BasicAgentTest {
 
     @Test
     fun `test friends is initialized empty`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         assertTrue(
             (FieldUtils.readField(agent, "friends", true) as MutableMap<*, *>)
                 .isEmpty()
@@ -349,7 +349,7 @@ class BasicAgentTest {
 
     @Test
     fun `test getFriends when empty`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val friends: MutableMap<Agent, Double> = HashMap()
         FieldUtils.writeField(agent, "friends", friends, true)
         assertEquals<Collection<Pair<Agent, Double>>>(friends.toList(), agent.getFriends())
@@ -358,7 +358,7 @@ class BasicAgentTest {
 
     @Test
     fun `setFriendWeight when not exists and valid`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val friends: MutableMap<Agent, Double> = HashMap()
         FieldUtils.writeField(agent, "friends", friends, true)
 
@@ -369,7 +369,7 @@ class BasicAgentTest {
 
     @Test
     fun `setFriendWeight when exists and valid`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val friends: MutableMap<Agent, Double> = HashMap()
         FieldUtils.writeField(agent, "friends", friends, true)
 
@@ -381,7 +381,7 @@ class BasicAgentTest {
 
     @Test
     fun `setFriendWeight when not exists and valid delete`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val friends: MutableMap<Agent, Double> = HashMap()
         FieldUtils.writeField(agent, "friends", friends, true)
 
@@ -392,7 +392,7 @@ class BasicAgentTest {
 
     @Test
     fun `setFriendWeight when exists and valid delete`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val friends: MutableMap<Agent, Double> = HashMap()
         FieldUtils.writeField(agent, "friends", friends, true)
 
@@ -404,7 +404,7 @@ class BasicAgentTest {
 
     @Test
     fun `setFriendWeight when not exists and too high`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val friends: MutableMap<Agent, Double> = HashMap()
         FieldUtils.writeField(agent, "friends", friends, true)
 
@@ -416,7 +416,7 @@ class BasicAgentTest {
 
     @Test
     fun `setFriendWeight when exists and too high`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val friends: MutableMap<Agent, Double> = HashMap()
         FieldUtils.writeField(agent, "friends", friends, true)
 
@@ -429,7 +429,7 @@ class BasicAgentTest {
 
     @Test
     fun `setFriendWeight when not exists and too low`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val friends: MutableMap<Agent, Double> = HashMap()
         FieldUtils.writeField(agent, "friends", friends, true)
 
@@ -441,7 +441,7 @@ class BasicAgentTest {
 
     @Test
     fun `setFriendWeight when exists and too low`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val friends: MutableMap<Agent, Double> = HashMap()
         FieldUtils.writeField(agent, "friends", friends, true)
 
@@ -454,7 +454,7 @@ class BasicAgentTest {
 
     @Test
     fun `getFriendWeight when exists`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val friends: MutableMap<Agent, Double> = HashMap()
         FieldUtils.writeField(agent, "friends", friends, true)
 
@@ -465,7 +465,7 @@ class BasicAgentTest {
 
     @Test
     fun `getFriendWeight when not exists`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val friends: MutableMap<Agent, Double> = HashMap()
         FieldUtils.writeField(agent, "friends", friends, true)
 
@@ -475,7 +475,7 @@ class BasicAgentTest {
 
     @Test
     fun `test actions is initialized empty`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         assertTrue(
             (FieldUtils.readField(agent, "actions", true) as MutableMap<*, *>)
                 .isEmpty()
@@ -484,7 +484,7 @@ class BasicAgentTest {
 
     @Test
     fun `getAction when exists`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val actions: MutableMap<UInt, Behaviour> = HashMap()
         FieldUtils.writeField(agent, "actions", actions, true)
         val behaviour = mockk<Behaviour>()
@@ -495,7 +495,7 @@ class BasicAgentTest {
 
     @Test
     fun `getAction when not exists`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val actions: MutableMap<UInt, Behaviour> = HashMap()
         FieldUtils.writeField(agent, "actions", actions, true)
 
@@ -504,7 +504,7 @@ class BasicAgentTest {
 
     @Test
     fun `setAction when exists`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val actions: MutableMap<UInt, Behaviour> = HashMap()
         FieldUtils.writeField(agent, "actions", actions, true)
         val b1 = mockk<Behaviour>()
@@ -516,7 +516,7 @@ class BasicAgentTest {
 
     @Test
     fun `setAction when exists delete`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val actions: MutableMap<UInt, Behaviour> = HashMap()
         FieldUtils.writeField(agent, "actions", actions, true)
         val b1 = mockk<Behaviour>()
@@ -527,7 +527,7 @@ class BasicAgentTest {
 
     @Test
     fun `setAction when not exists`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val actions: MutableMap<UInt, Behaviour> = HashMap()
         FieldUtils.writeField(agent, "actions", actions, true)
         val b1 = mockk<Behaviour>()
@@ -537,7 +537,7 @@ class BasicAgentTest {
 
     @Test
     fun `setAction when not exists delete`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val actions: MutableMap<UInt, Behaviour> = HashMap()
         FieldUtils.writeField(agent, "actions", actions, true)
         agent.setAction(2u, null)
@@ -546,7 +546,7 @@ class BasicAgentTest {
 
     @Test
     fun `pressure when no friends`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val belief = mockk<Belief>()
         val friends: MutableMap<Agent, Double> = HashMap()
         FieldUtils.writeField(agent, "friends", friends, true)
@@ -555,7 +555,7 @@ class BasicAgentTest {
 
     @Test
     fun `pressure when friends did nothing`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val f1 = mockk<Agent>()
         val f2 = mockk<Agent>()
 
@@ -575,7 +575,7 @@ class BasicAgentTest {
 
     @Test
     fun `pressure when friends did something but perception is null`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val f1 = mockk<Agent>()
         val f2 = mockk<Agent>()
         val b1 = mockk<Behaviour>()
@@ -603,7 +603,7 @@ class BasicAgentTest {
 
     @Test
     fun `pressure when friends did something`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val f1 = mockk<Agent>()
         val f2 = mockk<Agent>()
         val b1 = mockk<Behaviour>()
@@ -631,7 +631,7 @@ class BasicAgentTest {
 
     @Test
     fun `contextualPressure when pressure positive`() {
-        val agent = mockk<BasicAgent>()
+        val agent = mockk<BasicAgentImpl>()
         val belief = mockk<Belief>()
         val beliefs = mockk<Collection<Belief>>()
 
@@ -647,7 +647,7 @@ class BasicAgentTest {
 
     @Test
     fun `contextualPressure when pressure negative`() {
-        val agent = mockk<BasicAgent>()
+        val agent = mockk<BasicAgentImpl>()
         val belief = mockk<Belief>()
         val beliefs = mockk<Collection<Belief>>()
 
@@ -663,7 +663,7 @@ class BasicAgentTest {
 
     @Test
     fun `test delta is initialized empty`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         assertTrue(
             (FieldUtils.readField(agent, "delta", true) as MutableMap<*, *>)
                 .isEmpty()
@@ -672,7 +672,7 @@ class BasicAgentTest {
 
     @Test
     fun `getDelta when exists`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val belief = mockk<Belief>()
         val delta: MutableMap<Belief, Double> = HashMap()
         delta[belief] = 1.1
@@ -683,7 +683,7 @@ class BasicAgentTest {
 
     @Test
     fun `getDelta when not exists`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val belief = mockk<Belief>()
         val delta: MutableMap<Belief, Double> = HashMap()
         FieldUtils.writeField(agent, "delta", delta, true)
@@ -693,7 +693,7 @@ class BasicAgentTest {
 
     @Test
     fun `setDelta when exists and valid`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val belief = mockk<Belief>()
         val delta: MutableMap<Belief, Double> = HashMap()
         delta[belief] = 1.1
@@ -704,7 +704,7 @@ class BasicAgentTest {
 
     @Test
     fun `setDelta when exists and valid delete`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val belief = mockk<Belief>()
         val delta: MutableMap<Belief, Double> = HashMap()
         delta[belief] = 1.1
@@ -715,7 +715,7 @@ class BasicAgentTest {
 
     @Test
     fun `setDelta when not exists and valid`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val belief = mockk<Belief>()
         val delta: MutableMap<Belief, Double> = HashMap()
         FieldUtils.writeField(agent, "delta", delta, true)
@@ -725,7 +725,7 @@ class BasicAgentTest {
 
     @Test
     fun `setDelta when not exists and valid delete`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val belief = mockk<Belief>()
         val delta: MutableMap<Belief, Double> = HashMap()
         FieldUtils.writeField(agent, "delta", delta, true)
@@ -735,7 +735,7 @@ class BasicAgentTest {
 
     @Test
     fun `setDelta when exists and too low`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val belief = mockk<Belief>()
         val delta: MutableMap<Belief, Double> = HashMap()
         delta[belief] = 1.1
@@ -747,7 +747,7 @@ class BasicAgentTest {
 
     @Test
     fun `setDelta when not exists and too low`() {
-        val agent = BasicAgent()
+        val agent = BasicAgentImpl()
         val belief = mockk<Belief>()
         val delta: MutableMap<Belief, Double> = HashMap()
         FieldUtils.writeField(agent, "delta", delta, true)
@@ -758,7 +758,7 @@ class BasicAgentTest {
 
     @Test
     fun `updateActivation when previous activation null`() {
-        val agent = mockk<BasicAgent>()
+        val agent = mockk<BasicAgentImpl>()
         val belief = mockk<Belief>()
         val beliefs = mockk<Collection<Belief>>()
 
@@ -774,7 +774,7 @@ class BasicAgentTest {
 
     @Test
     fun `updateActivation when delta is null`() {
-        val agent = mockk<BasicAgent>()
+        val agent = mockk<BasicAgentImpl>()
         val belief = mockk<Belief>()
         val beliefs = mockk<Collection<Belief>>()
 
@@ -789,7 +789,7 @@ class BasicAgentTest {
 
     @Test
     fun `updateActivation when new value within range`() {
-        val agent = mockk<BasicAgent>()
+        val agent = mockk<BasicAgentImpl>()
         val belief = mockk<Belief>()
         val beliefs = mockk<Collection<Belief>>()
 
@@ -809,7 +809,7 @@ class BasicAgentTest {
 
     @Test
     fun `updateActivation when new value greater than 1`() {
-        val agent = mockk<BasicAgent>()
+        val agent = mockk<BasicAgentImpl>()
         val belief = mockk<Belief>()
         val beliefs = mockk<Collection<Belief>>()
 
@@ -829,7 +829,7 @@ class BasicAgentTest {
 
     @Test
     fun `updateActivation when new value less than 1`() {
-        val agent = mockk<BasicAgent>()
+        val agent = mockk<BasicAgentImpl>()
         val belief = mockk<Belief>()
         val beliefs = mockk<Collection<Belief>>()
 

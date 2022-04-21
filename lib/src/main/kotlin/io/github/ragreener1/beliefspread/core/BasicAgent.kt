@@ -30,7 +30,7 @@ import java.util.*
  * @author Robert Greener
  * @since v0.1.0
  */
-open class BasicAgent(override var uuid: UUID) : Agent {
+abstract class BasicAgent(override var uuid: UUID) : Agent {
     /**
      * Create a new [BasicAgent] with a random [UUID].
      *

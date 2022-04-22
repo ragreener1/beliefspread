@@ -41,6 +41,7 @@ plugins {
 }
 
 version = "0.13.0-SNAPSHOT"
+
 group = "io.github.ragreener1"
 
 repositories {
@@ -55,7 +56,8 @@ dependencies {
     // Use the Kotlin JDK 8 standard library.
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
+    // This dependency is used internally, and not exposed to consumers on their own compile
+    // classpath.
     implementation("com.google.guava:guava:30.1.1-jre")
 
     // Use the Kotlin test library.
@@ -75,14 +77,14 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_16
-    targetCompatibility = JavaVersion.VERSION_16
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
     withSourcesJar()
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "16"
+        jvmTarget = "11"
         freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
     }
 }
@@ -90,21 +92,22 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 tasks.jar {
     manifest {
         attributes(
-            mapOf(
-                "Implementation-Title" to project.name,
-                "Implementation-Version" to project.version
-            )
+                mapOf(
+                        "Implementation-Title" to project.name,
+                        "Implementation-Version" to project.version
+                )
         )
     }
 }
 
 val dokkaHtml by tasks.getting(org.jetbrains.dokka.gradle.DokkaTask::class)
 
-val javadocJar: TaskProvider<Jar> by tasks.registering(Jar::class) {
-    dependsOn(dokkaHtml)
-    archiveClassifier.set("javadoc")
-    from(dokkaHtml.outputDirectory)
-}
+val javadocJar: TaskProvider<Jar> by
+        tasks.registering(Jar::class) {
+            dependsOn(dokkaHtml)
+            archiveClassifier.set("javadoc")
+            from(dokkaHtml.outputDirectory)
+        }
 
 tasks["build"].dependsOn(javadocJar)
 
@@ -132,7 +135,9 @@ publishing {
                 }
                 scm {
                     connection.set("scm:git:https://github.com/ragreener1/belief-spread.git")
-                    developerConnection.set("scm:git:https://github.com/ragreener1/belief-spread.git")
+                    developerConnection.set(
+                            "scm:git:https://github.com/ragreener1/belief-spread.git"
+                    )
                     url.set("https://github.com/ragreener1/belief-spread/")
                 }
             }
@@ -156,10 +161,4 @@ signing {
     sign(publishing.publications["maven"])
 }
 
-tasks.dokkaHtml.configure {
-    dokkaSourceSets {
-        named("main") {
-            includes.from("module.md")
-        }
-    }
-}
+tasks.dokkaHtml.configure { dokkaSourceSets { named("main") { includes.from("module.md") } } }

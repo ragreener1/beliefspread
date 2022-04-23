@@ -136,7 +136,16 @@ open class BasicAgent(override var uuid: UUID) : Agent {
         }
     }
 
+    @Deprecated(
+        "renamed to activationChange",
+        replaceWith = ReplaceWith("activationChange(time, belief, beliefs)"),
+        level = DeprecationLevel.WARNING
+    )
     override fun contextualPressure(time: UInt, belief: Belief, beliefs: Collection<Belief>): Double {
+        return activationChange(time, belief, beliefs)
+    }
+
+    override fun activationChange(time: UInt, belief: Belief, beliefs: Collection<Belief>): Double {
         val p = pressure(time, belief)
         return if (p > 0) {
             (1 + contextualise(time, belief, beliefs)) / 2.0 * p
@@ -169,7 +178,7 @@ open class BasicAgent(override var uuid: UUID) : Agent {
                 -1.0,
                 min(
                     1.0,
-                    d * a + this.contextualPressure(time - 1u, belief, beliefs)
+                    d * a + this.activationChange(time - 1u, belief, beliefs)
                 )
             )
         )

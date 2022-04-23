@@ -630,32 +630,32 @@ class BasicAgentTest {
     }
 
     @Test
-    fun `contextualPressure when pressure positive`() {
+    fun `activationChange when pressure positive`() {
         val agent = mockk<BasicAgent>()
         val belief = mockk<Belief>()
         val beliefs = mockk<Collection<Belief>>()
 
         every { agent.contextualise(2u, belief, beliefs) } returns 0.5
         every { agent.pressure(2u, belief) } returns 0.1
-        every { agent.contextualPressure(2u, belief, beliefs) } answers { callOriginal() }
+        every { agent.activationChange(2u, belief, beliefs) } answers { callOriginal() }
 
-        assertEquals(0.075, agent.contextualPressure(2u, belief, beliefs), 0.001)
+        assertEquals(0.075, agent.activationChange(2u, belief, beliefs), 0.001)
 
         verify(exactly = 1) { agent.contextualise(2u, belief, beliefs) }
         verify(exactly = 1) { agent.pressure(2u, belief) }
     }
 
     @Test
-    fun `contextualPressure when pressure negative`() {
+    fun `activationChange when pressure negative`() {
         val agent = mockk<BasicAgent>()
         val belief = mockk<Belief>()
         val beliefs = mockk<Collection<Belief>>()
 
         every { agent.contextualise(2u, belief, beliefs) } returns 0.5
         every { agent.pressure(2u, belief) } returns -0.1
-        every { agent.contextualPressure(2u, belief, beliefs) } answers { callOriginal() }
+        every { agent.activationChange(2u, belief, beliefs) } answers { callOriginal() }
 
-        assertEquals(-0.025, agent.contextualPressure(2u, belief, beliefs))
+        assertEquals(-0.025, agent.activationChange(2u, belief, beliefs))
 
         verify(exactly = 1) { agent.contextualise(2u, belief, beliefs) }
         verify(exactly = 1) { agent.pressure(2u, belief) }
@@ -795,7 +795,7 @@ class BasicAgentTest {
 
         every { agent.getActivation(1u, belief) } returns 0.2
         every { agent.getDelta(belief) } returns 1.1
-        every { agent.contextualPressure(1u, belief, beliefs) } returns 0.3
+        every { agent.activationChange(1u, belief, beliefs) } returns 0.3
         every { agent.updateActivation(2u, belief, beliefs) } answers { callOriginal() }
         every { agent.setActivation(any(), any(), any()) } just Runs
 
@@ -803,7 +803,7 @@ class BasicAgentTest {
 
         verify(exactly = 1) { agent.getActivation(1u, belief) }
         verify(exactly = 1) { agent.getDelta(belief) }
-        verify(exactly = 1) { agent.contextualPressure(1u, belief, beliefs) }
+        verify(exactly = 1) { agent.activationChange(1u, belief, beliefs) }
         verify(exactly = 1) { agent.setActivation(2u, belief, 0.2 * 1.1 + 0.3) }
     }
 
@@ -815,7 +815,7 @@ class BasicAgentTest {
 
         every { agent.getActivation(1u, belief) } returns 0.2
         every { agent.getDelta(belief) } returns 1.1
-        every { agent.contextualPressure(1u, belief, beliefs) } returns 1.0
+        every { agent.activationChange(1u, belief, beliefs) } returns 1.0
         every { agent.updateActivation(2u, belief, beliefs) } answers { callOriginal() }
         every { agent.setActivation(any(), any(), any()) } just Runs
 
@@ -823,7 +823,7 @@ class BasicAgentTest {
 
         verify(exactly = 1) { agent.getActivation(1u, belief) }
         verify(exactly = 1) { agent.getDelta(belief) }
-        verify(exactly = 1) { agent.contextualPressure(1u, belief, beliefs) }
+        verify(exactly = 1) { agent.activationChange(1u, belief, beliefs) }
         verify(exactly = 1) { agent.setActivation(2u, belief, 1.0) }
     }
 
@@ -835,7 +835,7 @@ class BasicAgentTest {
 
         every { agent.getActivation(1u, belief) } returns -0.2
         every { agent.getDelta(belief) } returns 1.1
-        every { agent.contextualPressure(1u, belief, beliefs) } returns -1.0
+        every { agent.activationChange(1u, belief, beliefs) } returns -1.0
         every { agent.updateActivation(2u, belief, beliefs) } answers { callOriginal() }
         every { agent.setActivation(any(), any(), any()) } just Runs
 
@@ -843,7 +843,7 @@ class BasicAgentTest {
 
         verify(exactly = 1) { agent.getActivation(1u, belief) }
         verify(exactly = 1) { agent.getDelta(belief) }
-        verify(exactly = 1) { agent.contextualPressure(1u, belief, beliefs) }
+        verify(exactly = 1) { agent.activationChange(1u, belief, beliefs) }
         verify(exactly = 1) { agent.setActivation(2u, belief, -1.0) }
     }
 }

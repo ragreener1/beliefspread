@@ -191,7 +191,28 @@ interface Agent : UUIDd {
      * @author Robert Greener
      * @since v0.8.0
      */
+    @Deprecated(
+        "renamed to activationChange",
+        replaceWith = ReplaceWith("activationChange(time, belief, beliefs)"),
+        level = DeprecationLevel.WARNING
+    )
     fun contextualPressure(time: UInt, belief: Belief, beliefs: Collection<Belief>): Double
+
+    /**
+     * Gets the change in activation for the [Agent] as a result of the [Behaviour] observed.
+     *
+     * This takes into account the beliefs that the agent already holds.
+     *
+     * @param time The Time.
+     * @param belief The belief.
+     * @param beliefs All the beliefs.
+     * @return The change in activation..
+     * @see Agent.pressure
+     * @see Agent.contextualise
+     * @author Robert Greener
+     * @since v0.13.0
+     */
+    fun activationChange(time: UInt, belief: Belief, beliefs: Collection<Belief>): Double
 
     /**
      * Gets the delta for a given [Belief].

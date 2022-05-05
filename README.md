@@ -2,6 +2,8 @@
 
 This is a JVM library (written in Kotlin) which allows you to model how beliefs and behaviours spread between Agents.
 
+This project is licensed under the GPLv3 (or any later version).
+
 # Mailing list
 
 To contribute to this project, please email a patch to [~ragreener1/beliefspread@lists.sr.ht](mailto:~ragreener1/beliefspread@lists.sr.ht).

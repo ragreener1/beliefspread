@@ -16,11 +16,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses>
  */
 
-package io.github.ragreener1.beliefspread.bdi
+package com.robgreener.beliefspread.bdi
 
-import io.github.ragreener1.beliefspread.core.BasicAgent
-import io.github.ragreener1.beliefspread.core.Belief
-import io.github.ragreener1.beliefspread.core.UnstableAPI
+import com.robgreener.beliefspread.core.BasicAgent
+import com.robgreener.beliefspread.core.Belief
+import com.robgreener.beliefspread.core.UnstableAPI
 import java.util.*
 
 /**

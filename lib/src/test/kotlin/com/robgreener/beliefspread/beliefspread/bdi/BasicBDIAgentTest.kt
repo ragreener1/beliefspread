@@ -16,9 +16,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses>
  */
 
-package io.github.ragreener1.beliefspread.bdi
+package com.robgreener.beliefspread.bdi
 
-import io.github.ragreener1.beliefspread.core.UnstableAPI
+import com.robgreener.beliefspread.core.UnstableAPI
 import org.apache.commons.lang3.reflect.FieldUtils
 import java.util.*
 import kotlin.test.Test
